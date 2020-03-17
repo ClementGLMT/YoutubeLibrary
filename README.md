@@ -1,2 +1,2 @@
 # YoutubeLibrary
-A youtube library with some basic features
+A React youtube library with some basic features
