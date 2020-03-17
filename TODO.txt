@@ -1,0 +1,32 @@
+FEATURES : 
+    Play videos from user library
+    Search for new videos on Yt
+    Add new video fron Yt to user library               BACKEND DONE
+    Remove video from library                           BACKEND DONE
+    Click on a video -> Start the video on the right panel
+    Add video to library from search by :
+        clicking on it (visual animation)
+        drag and drop to left panel
+
+OPTIONAL FEATURES :
+    Search in user library
+    Filter user library
+    Send/share video to another user
+
+LANGUAGES :
+    Back PHP
+    Front jQuery, Angular (React ?)
+
+LIBRARIES/API : 
+    Youtube Data API
+    jQuery
+
+TECHNICAL REQUIREMENTS :
+    videos thumbnails = CSS + MVC
+    Left Panel :
+        videos list 
+        research on yt (limit the result set)
+        library name
+    Right panel : 
+        Read the video chosen from left panel
+        Display result of search
