@@ -20,6 +20,7 @@ function connectAPI() {
 
     myRouter.route('/add')
         .post(function(req,res){
+            console.log("POST received on /add");
             fs.readFile('../../server/'+req.body.user+".lib", (err, data) => {
                 if (err) {
                   console.error(err)
@@ -33,11 +34,28 @@ function connectAPI() {
                         return console.log(err);
                     } 
                 });
-              })
+                console.log(json.title+" added to "+req.body.user+" library");
+            })
         })
+
+        var vidtoplay = [];
+        myRouter.route('/play')
+            .post(function (req,res) {
+                console.log("POST received on /play");
+                vidtoplay = {
+                    videoId: req.body.videoid,
+                    videotitle: req.body.videotitle
+                    //add a field to modify the thumbnails here
+                }
+            })
+            .get(function (req, res) {
+                console.log("GET received on /play");
+                res.json(vidtoplay);
+            })
     
         myRouter.route('/remove')
         .post(function(req,res){
+            console.log("POST received on /remove");
             fs.readFile('../../server/'+req.body.user+".lib", (err, data) => {
                 if (err) {
                   console.error(err)
@@ -45,16 +63,13 @@ function connectAPI() {
                 }
                 data = JSON.parse(data);
                 let json = JSON.parse('{"title":"'+req.body.rmtitle+'", "id":"'+req.body.rmid+'"}');
-                console.log(JSON.stringify(json));      
 
                 for (var i = 0; i < data['videos'].length; i++){
-                    console.log("Testing : "+JSON.stringify(data['videos'][i]));
                     if (data['videos'][i].id === json.id){
-                        console.log("Matched : "+data['videos'][i]);
                         data['videos'].splice(i,1);
                     }
                   }
-                  console.log(JSON.stringify(data));        
+                  console.log(json.title+ "deteled from "+req.body.user+" library");        
                   fs.writeFile('../../server/'+req.body.user+".lib", JSON.stringify(data), function(err) {
                     if(err) {
                         return console.log(err);
@@ -65,18 +80,19 @@ function connectAPI() {
 
     myRouter.route('/data')
         .get(function(req,res){ 
+            console.log("GET received on /data");
             fs.readFile('../../server/'+req.body.user+".lib", (err, data) => {
                 if (err) {
                   console.error(err)
                   return
                 }
-                //modify thumbnails by modifying "data" here
                 res.end(data);
               })
         })
 
     myRouter.route('/search')
         .post(function(req,res){
+            console.log("POST received on /search");
             axios.get(ytapiURL, {
                 params: {
                   part: 'snippet',
@@ -87,31 +103,48 @@ function connectAPI() {
                 }
               })
               .then(function (response) {
+                  var results = [];
                   for (let i = 0; i < req.body.maxResults; i++) {
-                      response.data.items[i].id = JSON.stringify(response.data.items[i].id);
-                      response.data.items[i].snippet = JSON.stringify(response.data.items[i].snippet);
-
-                      //console.log("id : "+response.data.items[i].id);
-                      //console.log("snippet : "+response.data.items[i].snippet);
+                        results.push({
+                            videoId: response.data.items[i].id.videoId, 
+                            videotitle: response.data.items[i].snippet.title,
+                            thumbnails: response.data.items[i].snippet.thumbnails //Modify thumbnails here
+                        });                      
                   }
-                  //response.data.items
-                console.log(response.data);
+                  console.log(results);
+                    axios.post('http://localhost:2999/ressearch', {
+                        body: {
+                            results
+                        }
+                    })
+                    .then(() => {console.log("Results sent to /ressearch ("+results.length+" results)"); }
+                    )
+                    .catch(function (error) {
+                        console.log(error);
+                    });
               })
               .catch(function (error) {
                 console.log(error);
               })
               .finally(function () {
-                // always executed
               });
         })
+        
+    
+    var searchresults=[];
+    myRouter.route('/ressearch')
+        .post(function (req, res) {
+            console.log("POST received on /ressearch");
+            searchresults = req.body;
+        })
+        .get(function(req, res){
+            console.log("GET received on /ressearch");
+            res.json(searchresults.body);
+        })
 
-
-    myRouter.route('/')
-    .all(function(req,res){ 
-          res.json({message : "Bienvenue sur notre API ", methode : req.method});
-    });    
     app.use(myRouter);  
     app.listen(port, hostname, function(){
+        console.log("Listening HTTP on "+hostname+":"+port);
     });
 }
 
