@@ -30,3 +30,8 @@ TECHNICAL REQUIREMENTS :
     Right panel : 
         Read the video chosen from left panel
         Display result of search
+
+
+Youtube Data API key : AIzaSyASO7i2BTsNkU_YjucK5Eej-XgrsHnZDu8
+
+GET https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=surfing&type=videos&key=AIzaSyASO7i2BTsNkU_YjucK5Eej-XgrsHnZDu8
