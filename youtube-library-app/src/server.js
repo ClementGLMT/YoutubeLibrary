@@ -27,7 +27,8 @@ function connectAPI() {
                   return
                 }
                 data = JSON.parse(data);
-                let json = JSON.parse( '{"title":"'+req.body.addtitle+'", "id":"'+req.body.addid+'"}');
+                
+                let json = JSON.parse( '{"title":"'+req.body.addtitle+'", "id":"'+req.body.addid+'", "thumbnails":'+req.body.thumbnails+'}');
                 data['videos'].push(json);
                 fs.writeFile('../../server/'+req.body.user+".lib", JSON.stringify(data), function(err) {
                     if(err) {
@@ -44,8 +45,9 @@ function connectAPI() {
                 console.log("POST received on /play");
                 vidtoplay = {
                     videoId: req.body.videoid,
-                    videotitle: req.body.videotitle
-                    //add a field to modify the thumbnails here
+                    videotitle: req.body.videotitle,
+                    thumbnails: req.body.thumbnails
+                    //Modify thumbnails here
                 }
             })
             .get(function (req, res) {
@@ -88,14 +90,13 @@ function connectAPI() {
                   return
                 }
                 data = JSON.parse(data);
-                let json = JSON.parse('{"title":"'+req.body.rmtitle+'", "id":"'+req.body.rmid+'"}');
 
                 for (var i = 0; i < data['videos'].length; i++){
-                    if (data['videos'][i].id === json.id){
+                    if (data['videos'][i].id === req.body.rmid){
                         data['videos'].splice(i,1);
                     }
                   }
-                  console.log(json.title+ "deteled from "+req.body.user+" library");        
+                  console.log(req.body.rmtitle+ "deteled from "+req.body.user+" library");        
                   fs.writeFile('../../server/'+req.body.user+".lib", JSON.stringify(data), function(err) {
                     if(err) {
                         return console.log(err);
@@ -124,7 +125,7 @@ function connectAPI() {
                   part: 'snippet',
                   maxResults: req.body.maxResults,
                   q: req.body.keyword,
-                  type: 'videos',
+                  type: 'video',
                   key: apiKey
                 }
               })
@@ -134,7 +135,7 @@ function connectAPI() {
                         results.push({
                             videoId: response.data.items[i].id.videoId, 
                             videotitle: response.data.items[i].snippet.title,
-                            thumbnails: response.data.items[i].snippet.thumbnails //Modify thumbnails here
+                            thumbnails: JSON.stringify(response.data.items[i].snippet.thumbnails) //Modify thumbnails here
                         });                      
                   }
                   console.log(results);

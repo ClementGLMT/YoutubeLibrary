@@ -1,2 +1,16 @@
- {"name": "mark", "videos": [{"title":"Learn React - React Crash Course 2018 - React Tutorial with Examples |
-Mosh","id":"Ke90Tje7VS0"}, {"title": "Introduction to Angular JS","id":"8ILQOFAgaXE"}]}
+ {"name": "mark", 
+ "videos": [
+     {"title":"Learn React - React Crash Course 2018 - React Tutorial with Examples |
+Mosh",
+    "id":"Ke90Tje7VS0",
+    "thumbnails":{
+        "default":{"url":"https://i.ytimg.com/vi/Ke90Tje7VS0/default.jpg","width":120,"height":90},
+        "medium":{"url":"https://i.ytimg.com/vi/Ke90Tje7VS0/mqdefault.jpg","width":320,"height":180},
+        "high":{"url":"https://i.ytimg.com/vi/Ke90Tje7VS0/hqdefault.jpg","width":480,"height":360}}}, 
+    {"title": "Introduction to Angular JS",
+    "id":"8ILQOFAgaXE",
+    "thumbnails":{
+        "default":{"url":"https://i.ytimg.com/vi/8ILQOFAgaXE/default.jpg","width":120,"height":90},
+        "medium":{"url":"https://i.ytimg.com/vi/8ILQOFAgaXE/mqdefault.jpg","width":320,"height":180},
+        "high":{"url":"https://i.ytimg.com/vi/8ILQOFAgaXE/hqdefault.jpg","width":480,"height":360}
+    }}]}
