@@ -52,6 +52,32 @@ function connectAPI() {
                 console.log("GET received on /play");
                 res.json(vidtoplay);
             })
+
+        myRouter.route('/rename')
+            .post(function(req,res){
+                var oldname;
+                console.log("POST received on /rename");
+                fs.readFile('../../server/'+req.body.user+".lib", (err, data) => {
+                    if (err) {
+                      return console.error(err);
+                    }
+                    data = JSON.parse(data);
+                    for (var i = 0; i < data['videos'].length; i++){
+                        if (data['videos'][i].id === req.body.videoid) {
+                            oldname = data['videos'][i].title;
+                            data['videos'][i].title = req.body.newtitle;
+                        }
+                    }
+                    fs.writeFile('../../server/'+req.body.user+".lib", JSON.stringify(data), function(err) {
+                        if(err) {
+                            return console.log(err);
+                        }
+                        console.log("Renamed "+oldname+" to "+req.body.newtitle);
+                    });
+                })
+                
+
+            })
     
         myRouter.route('/remove')
         .post(function(req,res){
