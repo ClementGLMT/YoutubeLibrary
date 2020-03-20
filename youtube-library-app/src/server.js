@@ -108,12 +108,13 @@ function connectAPI() {
     myRouter.route('/data')
         .get(function(req,res){ 
             console.log("GET received on /data");
-            fs.readFile('../../server/'+req.body.user+".lib", (err, data) => {
+            console.log(req.query);
+            fs.readFile('../../server/'+req.query.user+".lib", (err, data) => {
                 if (err) {
-                  console.error(err)
-                  return
+                    return console.error(err);
                 }
-                res.end(data);
+                //console.log(data.toString());
+                res.json(JSON.parse(data.toString()));
               })
         })
 
@@ -135,10 +136,10 @@ function connectAPI() {
                         results.push({
                             videoId: response.data.items[i].id.videoId, 
                             videotitle: response.data.items[i].snippet.title,
-                            thumbnails: JSON.stringify(response.data.items[i].snippet.thumbnails) //Modify thumbnails here
+                            thumbnails: response.data.items[i].snippet.thumbnails //Modify thumbnails here
                         });                      
                   }
-                  console.log(results);
+                  console.log(JSON.stringify(results));
                     axios.post('http://localhost:2999/ressearch', {
                         body: {
                             results

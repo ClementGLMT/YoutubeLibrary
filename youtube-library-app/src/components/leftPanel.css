@@ -1,0 +1,35 @@
+
+
+.libraryName.ui.header:first-child {
+    height: 5%;
+    width: 340px;
+    text-align: center;
+    align-items: center;
+    font-size: 2em;
+}
+
+.videoList {
+    height: 70%;
+    width: 340px;
+}
+
+.leftPanel  {
+    float: left;
+    width: 340px;
+    height: 88vh;
+    margin-left: 0.5em;
+    margin-top: 2vh;
+    position: fixed; 
+  }
+
+button.ui.fade.animated.button {
+    height: 5% ;
+    width: 340px ;
+    align-items: center ;
+    margin: 0 auto ;
+}
+
+
+
+
+

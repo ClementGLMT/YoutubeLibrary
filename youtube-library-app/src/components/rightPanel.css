@@ -1,0 +1,13 @@
+
+
+  .form.ui.form {
+      width: 75%;
+      margin: auto;
+  }
+
+  .rightPanel {
+    float: left;
+    margin-left: 347px;
+    width: calc(100% - 21.850em);
+    margin-top: 1em;
+  }
