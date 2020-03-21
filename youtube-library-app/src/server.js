@@ -114,7 +114,13 @@ function connectAPI() {
                     return console.error(err);
                 }
                 //console.log(data.toString());
-                res.json(JSON.parse(data.toString()));
+                try {
+                    data = JSON.parse(data.toString());
+                    res.json(data);
+                } catch(e) {
+                    console.log(e);
+                }
+
               })
         })
 

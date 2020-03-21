@@ -1,6 +1,8 @@
 import React from 'react';
 import options from './maxresults';
-import { Form } from 'semantic-ui-react'
+import { Form } from 'semantic-ui-react';
+import './components.css';
+
 
 
 

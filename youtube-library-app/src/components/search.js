@@ -1,5 +1,7 @@
 import React from 'react';
 import { Button, Icon } from 'semantic-ui-react'
+import './components.css';
+
 
 import 'semantic-ui-css/semantic.min.css'
 

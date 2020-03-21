@@ -2,7 +2,7 @@ import React from 'react';
 import VideoList from './videolist';
 import { Header, Image } from 'semantic-ui-react';
 import Search from './search'; 
-import './leftPanel.css';
+import './components.css';
 import 'semantic-ui-css/semantic.min.css';
 const axios = require('axios');
 
@@ -54,8 +54,9 @@ export default class leftPanel extends React.Component{
 
 
 
+
             return (
-                <div className="leftPanel">
+                <div className='leftPanel'>
                     <Header className='libraryName'>
                         <Image size='mini' circular src='https://image.noelshack.com/fichiers/2020/12/4/1584657095-miniytlogo.png' /> Your library
                     </Header>

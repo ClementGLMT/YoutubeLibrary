@@ -1,0 +1,136 @@
+
+
+  .form.ui.form {
+    width: 75%;
+    margin: auto;
+    height: 15%;
+}
+
+.rightPanel {
+  float: left;
+  margin-left: 347px;
+  width: calc(100% - 347px);
+  margin-top: 2vh;
+  height: 87vh;
+}
+
+.videoPlayer {
+  margin-top: 2em;
+  height: 360px;
+  width: 340px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20vh;
+}
+
+
+
+.libraryName.ui.header:first-child {
+    height: 5%;
+    width: 340px;
+    text-align: center;
+    align-items: center;
+    font-size: 2em;
+}
+
+.videoList {
+    height: 70%;
+    width: 340px;
+}
+
+.leftPanel  {
+    float: left;
+    width: 340px;
+    height: 88vh;
+    margin-left: 0.5em;
+    margin-top: 2vh;
+    position: fixed; 
+  }
+
+button.ui.fade.animated.button {
+    height: 5% ;
+    width: 340px ;
+    align-items: center ;
+    margin: 0 auto ;
+}
+
+.rootLeft {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    overflow-y: hidden;
+    float: left;
+    height: 88%;
+  }
+
+.rootRight {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  overflow-y: hidden;
+  height: 86%;
+  margin: auto;
+}
+
+  .gridListLeft {
+    width: 340px;
+    height: 100%;
+    float: left;
+  }
+
+  ul.MuiGridList-root.gridListLeft {
+    display: block;
+  }
+
+  .gridListRight {
+    width: 490px;
+    height: 100%;
+    float: left;
+  }
+
+  .gridTileRight {
+    width: 480px;
+    scroll-margin-right: 30px;
+  }
+
+  .gridTileLeft {
+    width: 320px;
+    scroll-margin-right: 30px;
+    margin-top: 10px;
+    height: 180px;
+
+  }
+
+  .react-player__preview {
+    /* Custom thumnail here with !important */
+}
+
+.reactPlayer {
+    /*margin-left: auto;
+    margin-right: auto;*/
+    /*margin-top: 12vh;*/
+}
+
+.medium {
+    width: 320px;
+    height: 180px; /* Custom thumbnails here*/
+}
+
+.high {
+    width: 480px;
+    height: 360px; /* Custom thumbnails here*/
+}
+
+.videoContainer {
+    width: 960px;
+    height: 577px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10vh;
+}
+
+
+
+
+
+

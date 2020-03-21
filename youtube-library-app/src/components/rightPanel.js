@@ -2,7 +2,9 @@ import React from 'react';
 import VideoList from './videolist';
 import 'semantic-ui-css/semantic.min.css';
 import SearchForm from './searchForm';
-import './rightPanel.css'
+import './components.css';
+import VideoPlayer from './videoPlayer';
+import { Header } from 'semantic-ui-react';
 
 
 export default class rightPanel extends React.Component {
@@ -17,6 +19,8 @@ export default class rightPanel extends React.Component {
 
     render(){
       console.log("Rendering right panel with isDataLoaded: "+this.state.isDataLoaded);
+      var VideoName = 'Okonami no suzuki';
+      
         return (
 
           <div className='rightPanel'>
@@ -27,6 +31,17 @@ export default class rightPanel extends React.Component {
 
 
     );
+
+    /*return (
+      <div className='rightPanel'>
+          <div className='videoContainer'>
+              <Header > {VideoName} </Header>
+              <VideoPlayer className = 'videoPlayer' url='https://www.youtube.com/watch?v=txkzJVZhVYc' thumburl='https://image.noelshack.com/fichiers/2020/12/5/1584732752-yagami-light.jpg'/>
+          </div>
+      </div>
+
+
+    );*/
     }
 
 };

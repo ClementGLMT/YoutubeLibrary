@@ -2,7 +2,7 @@ import React from 'react';
 import GridList from '@material-ui/core/GridList';
 import tileData from './tileData';
 import VideoTile from './videoTile'
-import './videolist.css';
+import './components.css';
 import 'semantic-ui-css/semantic.min.css';
 
 
