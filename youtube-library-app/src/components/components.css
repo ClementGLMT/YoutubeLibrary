@@ -129,6 +129,15 @@ button.ui.fade.animated.button {
     margin-top: 10vh;
 }
 
+.MuiGridListTileBar-title {
+
+}
+
+.MuiGridListTileBar-subtitle {
+    font-size: 1rem !important;
+    line-height: 24px !important;
+}
+
 
 
 
