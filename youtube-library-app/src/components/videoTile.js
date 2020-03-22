@@ -77,11 +77,11 @@ export default class VideoTile extends React.Component {
                 { !this.state.isRight &&
                 <div>
                   <Button className='editPopup' icon onClick={this.show('blurring')}> <Icon name='edit outline' /></Button>
+                  <Button className='deletePopup' icon > <Icon name='delete' /></Button>
                   <Button  icon className='videoPlayButton' > 
                      <Icon  size ='huge'  name='youtube play' /> 
                    </Button>
                     <div className='myCenterTriangle'> </div>
-
                     </div>
                 }
 

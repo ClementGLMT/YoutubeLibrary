@@ -203,6 +203,17 @@ button.ui.fade.animated.button {
   position: absolute !important;
   margin-bottom: 135px !important;
   background-color: white;
+  margin-right: 10px !important;
+
+}
+
+.deletePopup {
+  bottom: 0 !important;
+  left: 0 !important;
+  position: absolute !important;
+  margin-bottom: 135px !important;
+  background-color: white;
+  margin-left: 10px !important;
 }
 
 .popupContainer {
