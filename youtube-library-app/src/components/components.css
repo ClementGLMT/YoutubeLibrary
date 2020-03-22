@@ -40,6 +40,17 @@
 
 }
 
+
+
+.videoPlayButton {
+  bottom: 0px !important;
+  position: absolute;
+  right: 0px;
+  margin-bottom: 70px !important;
+  margin-right: 116px !important;
+  background-color: rgba(0,0,0,0) !important;
+}
+
 .videoPlayer {
   margin-top: 2em;
   height: 360px;
@@ -127,11 +138,10 @@ button.ui.fade.animated.button {
   }
 
   .gridTileLeft {
-    width: 320px;
+    width: 320px ;
     scroll-margin-right: 30px;
     margin-top: 10px;
     height: 180px;
-
   }
 
   .react-player__preview {
@@ -147,6 +157,21 @@ button.ui.fade.animated.button {
 .medium {
     width: 320px;
     height: 180px; /* Custom thumbnails here*/
+    transform: translateY(0%) !important;
+
+}
+
+.myCenterTriangle {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 9px 0 9px 17px;
+  border-color: transparent transparent transparent #ffffff;
+  bottom: 0px !important;
+  position: absolute;
+  right: 0px;
+  margin-bottom: 92px !important;
+  margin-right: 149px !important;
 }
 
 .high {

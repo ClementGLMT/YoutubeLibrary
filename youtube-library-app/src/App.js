@@ -14,8 +14,6 @@ export default class App extends React.Component {
     this.state = {
       user: this.getUser()
       }
-    this.header = React.createRef();
-    this.headerClass= '';
     }
   
 
@@ -42,7 +40,7 @@ export default class App extends React.Component {
 
       <div className="App"> 
 
-        <header ref={this.header} className = "App-header">
+        <header className = "App-header">
           <div>Your Youtube Library</div>
         </header>
     

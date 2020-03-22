@@ -1,7 +1,7 @@
 import React from 'react';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import { Icon, Header, Button, Image, Modal, Input, Popup } from 'semantic-ui-react';
+import { Icon, Header, Button, Image, Modal, Input } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import './components.css';
 
@@ -56,39 +56,6 @@ export default class VideoTile extends React.Component {
 
     }
 
-    /*<Modal style = {{marginBottom: '10px'}} dimmer={dimmer} open={open} onClose={this.close} size='small'>
-                <Modal.Header>{this.state.title.concat(this.state.subtitle)}</Modal.Header>
-                <Modal.Content image>
-                  <Image
-                    wrapped
-                    size='medium'
-                    src={this.props.data.thumbnails.medium.url}
-                    className = 'medium'
-                  />
-                  <Modal.Description>
-                    <Header style={{marginLeft: 'auto', marginRight: 'auto'}} >What's the new name of your video ?</Header>
-                      <Input placeholder='New name' style={{marginTop: '28.375px', marginLeft: '56.55px'}}/>
-                  </Modal.Description>
-                </Modal.Content>
-                <Modal.Actions>
-                  <Button negative onClick={this.close}>
-                    Cancel
-                  </Button>
-                  <Button
-                    positive
-                    icon='checkmark'
-                    labelPosition='right'
-                    content="Confirm"
-                    onClick={this.close}
-                  />
-                </Modal.Actions>
-              </Modal>*/
-
-                              /*<Popup on='click' trigger={<Button className='editPopup' icon basic > <Icon name='edit outline'/></Button>} flowing >
-                              <Header as='h4'>New name ?</Header>
-                              <Input placeholder='New name'/>
-                              <Button onClick={()=> {alert('yessai')}}>Confirm</Button>
-                           </Popup>*/
 
     state = { open: false }
 
@@ -108,8 +75,16 @@ export default class VideoTile extends React.Component {
                 </GridListTileBar>
 
                 { !this.state.isRight &&
+                <div>
                   <Button className='editPopup' icon onClick={this.show('blurring')}> <Icon name='edit outline' /></Button>
+                  <Button  icon className='videoPlayButton' > 
+                     <Icon  size ='huge'  name='youtube play' /> 
+                   </Button>
+                    <div className='myCenterTriangle'> </div>
+
+                    </div>
                 }
+
 
             </GridListTile>
 

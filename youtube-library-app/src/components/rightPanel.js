@@ -31,8 +31,9 @@ export default class rightPanel extends React.Component {
 
 
     );
-
-    /*return (
+      
+    /*
+    return (
       <div className='rightPanel'>
           <div className='videoContainer'>
               <Header > {VideoName} </Header>
