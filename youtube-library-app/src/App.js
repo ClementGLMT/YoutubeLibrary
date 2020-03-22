@@ -14,6 +14,8 @@ export default class App extends React.Component {
     this.state = {
       user: this.getUser()
       }
+    this.header = React.createRef();
+    this.headerClass= '';
     }
   
 
@@ -27,19 +29,27 @@ export default class App extends React.Component {
   }
 
   render(){
+
+
+    /*var offTop = this.header.getBoundingClientRect().top;
+    if (window.pageYOffset > offTop) {
+      this.header.classList.add("sticky");
+    } else {
+      this.header.classList.remove("sticky");
+    }*/
+
     return (
 
-      <div className="App">
-        <header className = "App-header">
+      <div className="App"> 
+
+        <header ref={this.header} className = "App-header">
           <div>Your Youtube Library</div>
         </header>
-  
+    
       <LeftPanel className= "leftPanel" user= {this.state.user}/>
   
       <RightPanel className = "rightPanel" user= {this.state.user}/>
-  
-      <div className= "clearfix"></div>
-  
+
       </div>
   
     );

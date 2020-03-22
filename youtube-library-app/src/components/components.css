@@ -4,14 +4,40 @@
     width: 75%;
     margin: auto;
     height: 15%;
+    margin-top: 2vh;
+    position: relative;
+    /*z-index: 500;*/
 }
+
+.searchForm {
+
+}
+
+
+
+/*.right {
+  float: left;
+  width: calc(100% - 347px);
+  margin-top: 2vh;
+  margin-left: 347px;
+  height: 85vh;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  z-index: 800;
+}*/
 
 .rightPanel {
   float: left;
   margin-left: 347px;
   width: calc(100% - 347px);
   margin-top: 2vh;
-  height: 87vh;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  z-index: 800;
+
 }
 
 .videoPlayer {
@@ -43,7 +69,7 @@
     width: 340px;
     height: 88vh;
     margin-left: 0.5em;
-    margin-top: 2vh;
+    margin-top: 12vh;
     position: fixed; 
   }
 
@@ -70,6 +96,9 @@ button.ui.fade.animated.button {
   overflow-y: hidden;
   height: 86%;
   margin: auto;
+  position: relative;
+  z-index: 400;
+
 }
 
   .gridListLeft {
@@ -86,11 +115,15 @@ button.ui.fade.animated.button {
     width: 490px;
     height: 100%;
     float: left;
+    position: relative;
+    z-index: 100;
   }
 
   .gridTileRight {
     width: 480px;
     scroll-margin-right: 30px;
+    position: relative;
+    z-index: 1;
   }
 
   .gridTileLeft {
@@ -136,6 +169,25 @@ button.ui.fade.animated.button {
 .MuiGridListTileBar-subtitle {
     font-size: 1rem !important;
     line-height: 24px !important;
+}
+
+
+.editPopup {
+  bottom: 0 !important;
+  right: 0 !important;
+  position: absolute !important;
+  margin-bottom: 135px !important;
+  background-color: white;
+}
+
+.popupContainer {
+  bottom: 0 !important;
+  right: 0;
+  position: absolute;
+  margin-bottom: 10px !important;
+  background-color: white;
+  width: 2em;
+  height: 2em;
 }
 
 

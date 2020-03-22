@@ -24,7 +24,7 @@ export default class rightPanel extends React.Component {
         return (
 
           <div className='rightPanel'>
-            <SearchForm />
+          <SearchForm className='searchForm'/>
 
             <VideoList side='right' user={this.state.user} isDataLoaded={this.state.isDataLoaded}/>
           </div>
