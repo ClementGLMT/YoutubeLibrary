@@ -35,3 +35,8 @@ TECHNICAL REQUIREMENTS :
 Youtube Data API key : AIzaSyASO7i2BTsNkU_YjucK5Eej-XgrsHnZDu8
 
 GET https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=surfing&type=videos&key=AIzaSyASO7i2BTsNkU_YjucK5Eej-XgrsHnZDu8
+
+regex = /http\:\/\/www\.youtube\.com\/watch\?v=([\w-]{11})/;
+
+url = 'http://www.youtube.com/watch?v=Ahg6qcgoay4';
+id = url.match(regex)[1]; // id = 'Ahg6qcgoay4'
