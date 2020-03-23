@@ -2,20 +2,19 @@ import React from 'react';
 import './App.css';
 import LeftPanel from './components/leftPanel';
 import RightPanel from './components/rightPanel';
-import 'semantic-ui-css/semantic.min.css'
+import 'semantic-ui-css/semantic.min.css';
+import { store } from "./store";
+import {setUser} from './actions';
 
 
 
 
 export default class App extends React.Component {
-
-    constructor(props) {
-    super(props);
-    this.state = {
-      user: this.getUser()
-      }
-    }
   
+  constructor(props) {
+    super(props);
+    this.getUser();
+  }
 
   getUser(){
 
@@ -23,11 +22,16 @@ export default class App extends React.Component {
 
    var url = window.location.href;
    var user = url.match(regex)[1];
-   return user;
+   this.dispatchSetUser(user);
+  }
+
+  dispatchSetUser(user) {
+    store.dispatch(setUser(user));
   }
 
   render(){
 
+    console.log("User in App.js : "+store.getState().SetUser.user);
 
     /*var offTop = this.header.getBoundingClientRect().top;
     if (window.pageYOffset > offTop) {
@@ -44,9 +48,9 @@ export default class App extends React.Component {
           <div>Your Youtube Library</div>
         </header>
     
-      <LeftPanel className= "leftPanel" user= {this.state.user}/>
+      <LeftPanel className= "leftPanel" user= {store.getState().SetUser.user}/>
   
-      <RightPanel className = "rightPanel" user= {this.state.user}/>
+      <RightPanel className = "rightPanel" user= {store.getState().SetUser.user}/>
 
       </div>
   

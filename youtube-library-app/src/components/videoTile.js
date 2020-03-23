@@ -13,46 +13,9 @@ export default class VideoTile extends React.Component {
     constructor(props){
       super(props);
 
-      this.state = {
-        thumbClass : '',
-        title: '',
-        subtitle: '',
-        isRight: ''
-      }
 
       this.inputName = '';
 
-      if(this.props.thumbsize === 'medium'){
-        this.state.thumbClass = 'medium';
-        this.state.isRight = 0;
-      }
-      if(this.props.thumbsize === 'high'){
-        this.state.thumbClass = 'high';
-        this.state.isRight = 1;
-      }
-
-      this.state.title = this.props.data.title;
-      this.state.subtitle = '';
-
-      if(this.props.data.title.length > 41){
-        this.state.title = '';
-        var arr = this.props.data.title.split(' ');
-        console.log(arr);
-        var i=0;
-        while ((this.state.title.length + arr[i].length) < 40) {
-          this.state.title = this.state.title.concat(arr[i]);
-          this.state.title = this.state.title.concat(' ');
-          console.log("Title = "+ this.state.title+" for i = "+i);
-            i++;
-        }
-        console.log("break for i = "+i);
-
-        for (let j = i; j < arr.length;j++) {
-          this.state.subtitle = this.state.subtitle.concat(arr[j]);  
-          this.state.subtitle = this.state.subtitle.concat(' ');
-          console.log("subtitle = "+ this.state.subtitle+" for j = "+j);
-        }
-      }
 
     }
 
@@ -65,16 +28,24 @@ export default class VideoTile extends React.Component {
       render() {
 
         const { open, dimmer } = this.state;
+        var thumbsize;
+        if(this.props.side === 'OnLeft')
+          thumbsize = 'medium';
+        else 
+          thumbsize = 'high';
+
+        
+        console.log("Loading tie with data (thumbsize = "+thumbsize+")= "+JSON.stringify(this.props.data));
 
         return(
 
           <div>
             <GridListTile  key={this.props.data.id} cols={1} className={this.props.gridTileClass}>
-                <img src={this.props.data.thumbnails[this.props.thumbsize].url} className={this.state.thumbClass} alt={this.state.title.concat(this.state.subtitle)}/>
-                <GridListTileBar title={this.state.title} subtitle={this.state.subtitle} >
+                <img src={this.props.data.thumbnails[thumbsize].url} className={this.props.side} alt={this.props.data.title.concat(this.props.data.subtitle)}/>
+                <GridListTileBar title={this.props.data.title} subtitle={this.props.data.subtitle} >
                 </GridListTileBar>
 
-                { !this.state.isRight &&
+                { (this.props.side === 'OnLeft') &&
                 <div>
                   <Button className='editPopup' icon onClick={this.show('blurring')}> <Icon name='edit outline' /></Button>
                   <Button className='deletePopup' icon > <Icon name='delete' /></Button>
@@ -89,7 +60,7 @@ export default class VideoTile extends React.Component {
             </GridListTile>
 
             <Modal style = {{marginBottom: '10px'}} dimmer={dimmer} open={open} onClose={this.close} size='small'>
-                <Modal.Header>{this.state.title.concat(this.state.subtitle)}</Modal.Header>
+                <Modal.Header>{this.props.data.title.concat(this.props.data.subtitle)}</Modal.Header>
                 <Modal.Content image>
                   <Image
                     wrapped

@@ -4,6 +4,8 @@ import { Header, Image } from 'semantic-ui-react';
 import Search from './search'; 
 import './components.css';
 import 'semantic-ui-css/semantic.min.css';
+import { store} from '../store';
+import {toogleIsDataLoaded} from '../actions';
 const axios = require('axios');
 
 
@@ -15,9 +17,9 @@ export default class leftPanel extends React.Component{
         super(props);
         this.state = {
           user: this.props.user,
-          data: {name: '', videos: []},
           isDataLoaded: 0,
         }
+        this.data = {name: '', videos: []};
       }
 
       getLibraryContent() {
@@ -32,9 +34,11 @@ export default class leftPanel extends React.Component{
         })
         .then( function (response) { 
             data = response.data;
-            context.setState({data: data, isDataLoaded: 1});
-            console.log("Data got : "+JSON.stringify(context.state.data));
+            context.data = data;
+            context.dispatchDataLoaded('leftPanel');
+            console.log("Data got : "+JSON.stringify(context.data));
             console.log("isDataLoaded : "+context.state.isDataLoaded);
+            return data;
         })
         .catch((err) => {
             console.log(err);
@@ -44,12 +48,19 @@ export default class leftPanel extends React.Component{
     componentDidMount(){
         var data = this.getLibraryContent();
         if(data !== undefined)
-            this.setState({data: data})
+            this.data= data;
     }
+
+    dispatchDataLoaded(panel) {
+        store.dispatch(toogleIsDataLoaded(panel));
+      }
+
+
     
 
     render(){
         console.log("In render (left): "+JSON.stringify(this.state.data));
+        console.log("User in left Panel : "+this.props.user)
         console.log("Rendering left panel with isDataLoaded: "+this.state.isDataLoaded);
 
 
@@ -62,7 +73,7 @@ export default class leftPanel extends React.Component{
                     </Header>
                     <Search className='search' style={{ height: '10%', width: '340px', margin: '0 auto' }}/>
 
-                    <VideoList className='videoList' side='left' user={this.state.user} data= {this.state.data.videos} isDataLoaded={this.state.isDataLoaded}/>
+                    <VideoList className='videoList' side='OnLeft' user={this.props.user} data= {this.data.videos} isDataLoaded={store.getState().DataLoading.isLeftDataLoaded}/>
                 </div>
             );
 

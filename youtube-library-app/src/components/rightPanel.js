@@ -5,6 +5,7 @@ import SearchForm from './searchForm';
 import './components.css';
 import VideoPlayer from './videoPlayer';
 import { Header } from 'semantic-ui-react';
+import WelcomeRightPanel from './welcomeRightPanel';
 
 
 export default class rightPanel extends React.Component {
@@ -21,12 +22,12 @@ export default class rightPanel extends React.Component {
       console.log("Rendering right panel with isDataLoaded: "+this.state.isDataLoaded);
       var VideoName = 'Okonami no suzuki';
       
-        return (
+       return (
 
           <div className='rightPanel'>
           <SearchForm className='searchForm'/>
 
-            <VideoList side='right' user={this.state.user} isDataLoaded={this.state.isDataLoaded}/>
+            <VideoList side='OnRight' user={this.state.user} isDataLoaded={this.state.isDataLoaded}/>
           </div>
 
 
@@ -43,6 +44,15 @@ export default class rightPanel extends React.Component {
 
 
     );*/
+
+        
+   /*  return (
+      <div className='rightPanel'>
+        <WelcomeRightPanel />
+      </div>
+
+
+    ); */
     }
 
 };

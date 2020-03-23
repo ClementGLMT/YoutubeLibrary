@@ -49,6 +49,7 @@
   margin-bottom: 70px !important;
   margin-right: 116px !important;
   background-color: rgba(0,0,0,0) !important;
+  z-index: 1;
 }
 
 .videoPlayer {
@@ -91,16 +92,17 @@ button.ui.fade.animated.button {
     margin: 0 auto ;
 }
 
-.rootLeft {
+.rootOnLeft {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     overflow-y: hidden;
     float: left;
     height: 88%;
+    width: 340px;
   }
 
-.rootRight {
+.rootOnRight {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -112,7 +114,7 @@ button.ui.fade.animated.button {
 
 }
 
-  .gridListLeft {
+  .gridListOnLeft {
     width: 340px;
     height: 100%;
     float: left;
@@ -122,7 +124,7 @@ button.ui.fade.animated.button {
     display: block;
   }
 
-  .gridListRight {
+  .gridListOnRight {
     width: 490px;
     height: 100%;
     float: left;
@@ -130,14 +132,14 @@ button.ui.fade.animated.button {
     z-index: 100;
   }
 
-  .gridTileRight {
+  .gridTileOnRight {
     width: 480px;
     scroll-margin-right: 30px;
     position: relative;
     z-index: 1;
   }
 
-  .gridTileLeft {
+  .gridTileOnLeft {
     width: 320px ;
     scroll-margin-right: 30px;
     margin-top: 10px;
@@ -154,7 +156,7 @@ button.ui.fade.animated.button {
     /*margin-top: 12vh;*/
 }
 
-.medium {
+.OnLeft {
     width: 320px;
     height: 180px; /* Custom thumbnails here*/
     transform: translateY(0%) !important;
@@ -174,7 +176,7 @@ button.ui.fade.animated.button {
   margin-right: 149px !important;
 }
 
-.high {
+.OnRight {
     width: 480px;
     height: 360px; /* Custom thumbnails here*/
 }
