@@ -1,11 +1,10 @@
 import React from 'react';
-import VideoList from './videolist';
 import 'semantic-ui-css/semantic.min.css';
-import SearchForm from './searchForm';
 import './components.css';
-import VideoPlayer from './videoPlayer';
-import { Header } from 'semantic-ui-react';
-import WelcomeRightPanel from './welcomeRightPanel';
+import {store} from '../store';
+import RightSearchResults from './rightSearchResults';
+import RightVideoPlayer from './rightVideoPlayer';
+import RightWelcome from './rightWelcome';
 
 
 export default class rightPanel extends React.Component {
@@ -20,39 +19,41 @@ export default class rightPanel extends React.Component {
 
     render(){
       console.log("Rendering right panel with isDataLoaded: "+this.state.isDataLoaded);
-      var VideoName = 'Okonami no suzuki';
+
+
+      var rightState = store.getState().ShowOnRight;
+
+      console.log("Testing with rightState: "+JSON.stringify(rightState))
+
       
-       return (
+      if(rightState.rightShowWelcome) {
+        return (
+          <RightWelcome />
+        );
+      }
 
-          <div className='rightPanel'>
-          <SearchForm className='searchForm'/>
+      if(rightState.rightShowSearchAndResults) {
+        return (
+          <RightSearchResults data = {store.getState().DataLoading.rightPanel.videos}/>
+        );
+      }
 
-            <VideoList side='OnRight' user={this.state.user} isDataLoaded={this.state.isDataLoaded}/>
-          </div>
+      if(rightState.rightShowVideo) {
+        console.log("Rendering video player");
+        return (
+          <RightVideoPlayer />
+        );
+      }
+
+      return (
+        <div>
+
+        </div>
+      );
 
 
-    );
+
       
-    /*
-    return (
-      <div className='rightPanel'>
-          <div className='videoContainer'>
-              <Header > {VideoName} </Header>
-              <VideoPlayer className = 'videoPlayer' url='https://www.youtube.com/watch?v=txkzJVZhVYc' thumburl='https://image.noelshack.com/fichiers/2020/12/5/1584732752-yagami-light.jpg'/>
-          </div>
-      </div>
-
-
-    );*/
-
-        
-   /*  return (
-      <div className='rightPanel'>
-        <WelcomeRightPanel />
-      </div>
-
-
-    ); */
     }
 
 };

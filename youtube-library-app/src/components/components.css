@@ -6,7 +6,7 @@
     height: 15%;
     margin-top: 2vh;
     position: relative;
-    /*z-index: 500;*/
+    z-index: 500;
 }
 
 .searchForm {

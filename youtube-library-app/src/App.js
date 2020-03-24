@@ -13,21 +13,9 @@ export default class App extends React.Component {
   
   constructor(props) {
     super(props);
-    this.getUser();
   }
 
-  getUser(){
 
-   var regex = /http:\/\/localhost:3000\/\?user=([\w-]{1,})/;
-
-   var url = window.location.href;
-   var user = url.match(regex)[1];
-   this.dispatchSetUser(user);
-  }
-
-  dispatchSetUser(user) {
-    store.dispatch(setUser(user));
-  }
 
   render(){
 
