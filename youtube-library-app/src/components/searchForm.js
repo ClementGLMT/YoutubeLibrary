@@ -2,10 +2,10 @@ import React from 'react';
 import options from './maxresults';
 import { Form } from 'semantic-ui-react';
 import './components.css';
-import {updateListReducer} from '../actions';
+import {updateListReducer, resultsFetchData, isSearching} from '../actions';
 import { store } from '../store';
 
-const axios = require('axios');
+//const axios = require('axios');
 
 
 
@@ -21,20 +21,39 @@ export default class searchForm extends React.Component {
 
     handleSubmit(){
         var self = this;
-        var data;
+        store.dispatch(isSearching(true, this.maxRes));
+        //var data;
+        /*console.log(resultsFetchData('http://localhost:2999/search', {
+            body: {
+                maxResults: self.maxRes,
+                keyword: self.inputSearch
+            }
+        }));*/
+        var action= resultsFetchData('http://localhost:2999/search', {
+                maxResults: self.maxRes,
+                keyword: self.inputSearch
+        });
+        console.log("ACTION :"+action);
+        action();
+        /*store.dispatch(resultsFetchData('http://localhost:2999/search', {
+            body: {
+                maxResults: self.maxRes,
+                keyword: self.inputSearch
+            }
+        }));*/
         //console.log("Submitting search: search = "+this.inputSearch+" max = "+this.maxRes);
-        axios.post('http://localhost:2999/search', {
+        /*axios.post('http://localhost:2999/search', {
             maxResults: self.maxRes,
             keyword: self.inputSearch
         })
         .then(function(response) {
             console.log(JSON.stringify(response.data));
-            self.data = response.data;
-            //self.dispatchUpdateList('righPanel', data);
+            //self.data = response.data;
+            self.dispatchUpdateList('righPanel', response.data);
         })
         .catch(function(err) {
             console.log(err);
-        })
+        })*/
 
 
     }
@@ -46,9 +65,12 @@ export default class searchForm extends React.Component {
 
     dispatchUpdateList(panel, videos){
         if(this.data !== []) {
-            this.dispatchUpdateList('rightPanel', this.data);
+            store.dispatch(updateListReducer(panel, videos));
         }
-        store.dispatch(updateListReducer(panel, videos));
+    }
+
+    componentWillUnmount() {
+        store.dispatch(isSearching(false));
     }
 
     render() {

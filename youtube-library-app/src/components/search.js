@@ -18,13 +18,15 @@ export default class Search extends React.Component {
         var lastDisp;
         var actualRightDisp = store.getState().ShowOnRight;
         console.log("Previous right panel state "+JSON.stringify(actualRightDisp))
-        for(var k in actualRightDisp) {
-          if(actualRightDisp[k] === 1)
-            lastDisp = k ;
-       }
+
+        for(var key in actualRightDisp){
+          if(actualRightDisp[key] === true)
+            lastDisp = key;
+        }
+        
        console.log("LastDisp : "+lastDisp);
        console.log("Previous right panel state modified "+JSON.stringify(actualRightDisp))
-        store.dispatch(showSearchAndResults(lastDisp));
+      store.dispatch(showSearchAndResults(lastDisp));
       }
 
     render() {

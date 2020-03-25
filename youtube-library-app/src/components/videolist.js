@@ -12,41 +12,49 @@ import 'semantic-ui-css/semantic.min.css';
 
 export default class VideoList extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.data = [];
+    this.update = false;
+  }
+
 
 
   getTitleAndSubtitle(video) {
 
 
-  
+    console.log("Video title tested: "+video.title);
       if(video.title.length > 41) {
+        //console.log('')
+      console.log("Video title tested: "+video.title+" > 41");
 
-        if(video.isParsed === 0){
+        if(video.isParsed === false){
 
           var title = video.title;
           var subtitle='';
           var fullTitle = title;
           var arr = title.split(' ');
           title = '';
-          //console.log(arr);
+          console.log(arr);
           var i=0;
           while ((title.length + arr[i].length) < 40) {
             title = title.concat(arr[i]);
             title = title.concat(' ');
-            //console.log("Title = "+ title+" for i = "+i);
+            console.log("Title = "+ title+" for i = "+i);
               i++;
           }
-          //console.log("break for i = "+i);
+          console.log("break for i = "+i);
     
           for (let j = i; j < arr.length;j++) {
             subtitle = subtitle.concat(arr[j]);  
             subtitle = subtitle.concat(' ');
-            //console.log("subtitle = "+ subtitle+" for j = "+j);
+           console.log("subtitle = "+ subtitle+" for j = "+j);
           }
           return {
             ...video,
             title: title,
             subtitle: subtitle,
-            isParsed: 1
+            isParsed: true
           }
         }
 
@@ -54,43 +62,49 @@ export default class VideoList extends React.Component {
     return video;
   }
 
+  componentDidMount() {
+    this.data = [];
+  }
+
+  shouldComponentUpdate(){
+    console.log("Should component update called");
+      return this.update;
+  }
 
   
 
   render(){
-
-    var data;
-    if(!this.props.isDataLoaded){
+    /*if(!this.props.isDataLoaded){
       console.log("Loading tileData");
       data = tileData;
     }
     else {
       console.log("Loading propsData");
       data = this.props.data;
-    }
-    if(this.props.side === 'OnLeft'){
-      data = this.props.data;
-      console.log("Loading props on left: "+JSON.stringify(data));
-    }
+    }*/
+      this.data = this.props.data;
 
-
-  //console.log('Videos : '+JSON.stringify(data));
-
-
-    for (let i = 0; i < data.length; i++) {
-
-      var data2 = this.getTitleAndSubtitle(data[i]);
-     // console.log("data2: "+JSON.stringify(data2));
-      data[i] = data2;
+      if(this.props.side === 'OnLeft')
+      console.log("Data in videoList left before treatment: "+JSON.stringify(this.data));
+  
+    for (let i = 0; i < this.data.length; i++) {
+      var data2 = this.getTitleAndSubtitle(this.data[i]);
+      this.data[i] = data2;
     }
 
+    this.update = true;
 
-    //console.log("Data in videoList : "+JSON.stringify(data));
+    /*this.data.map(tile => {
+      console.log(tile);
+    })*/
+
+    if(this.props.side === 'OnLeft')
+      console.log("Data in videoList Left after treatment: "+JSON.stringify(this.data));
 
     return (
         <div className={'root'+this.props.side} >
           <GridList cellHeight={180} className={'gridList'+this.props.side} cols={1}>
-            {data.map(tile => (
+            {this.data.map(tile => (
           
                 <VideoTile side={this.props.side} key={tile.id} data={tile} gridTileClass= {'gridTile'+this.props.side} />
             

@@ -11,19 +11,16 @@ export default class rightPanel extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      user: this.props.user,
-      isDataLoaded: 0,
-    }
+
   }
 
     render(){
-      console.log("Rendering right panel with isDataLoaded: "+this.state.isDataLoaded);
 
 
       var rightState = store.getState().ShowOnRight;
 
-      console.log("Testing with rightState: "+JSON.stringify(rightState))
+      //console.log("Testing with rightState: "+JSON.stringify(rightState));
+      //console.log("Data on right : "+JSON.stringify(store.getState().DataLoading.rightPanel.videos));
 
       
       if(rightState.rightShowWelcome) {

@@ -33,7 +33,7 @@ export default class leftPanel extends React.Component{
             data = response.data.videos;
             //console.log("Received from server: "+JSON.stringify(data));
             for (let i = 0; i < data.length; i++) {
-                data[i]['isParsed'] = 0;
+                data[i]['isParsed'] = false;
                 data[i]['subtitle'] = '';
                 
             }
@@ -113,7 +113,7 @@ export default class leftPanel extends React.Component{
     render(){
 
 
-            console.log("States in left panel : "+JSON.stringify(store.getState()));
+            //console.log("States in left panel : "+JSON.stringify(store.getState()));
 
             return (
                 <div className='leftPanel'>

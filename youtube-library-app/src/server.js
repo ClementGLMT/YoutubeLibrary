@@ -136,20 +136,21 @@ function connectAPI() {
 
     myRouter.route('/search')
         .post(function(req,res){
-            console.log("POST received on /search");
+            console.log("POST received on /search"+req);
             axios.get(ytapiURL, {
                 params: {
                   part: 'snippet',
                   maxResults: req.body.maxResults,
                   q: req.body.keyword,
                   type: 'video',
-                  key: apiKey
+                  key: apiKey,
+                  fields: 'items(id,snippet(title, thumbnails))'
                 }
               })
               .then(function (response) {
-                  var results = [];
+                  var results = {videos: []};
                   for (let i = 0; i < req.body.maxResults; i++) {
-                        results.push({
+                        results.videos.push({
                             id: response.data.items[i].id.videoId, 
                             title: response.data.items[i].snippet.title,
                             thumbnails: response.data.items[i].snippet.thumbnails //Modify thumbnails here
@@ -160,6 +161,7 @@ function connectAPI() {
               })
               .catch(function (error) {
                 console.log(error);
+                res.json(error);
               })
               .finally(function () {
               });

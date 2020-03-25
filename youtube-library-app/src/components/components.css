@@ -110,6 +110,7 @@ button.ui.fade.animated.button {
   height: 86%;
   margin: auto;
   position: relative;
+  width: 490px;
   z-index: 400;
 
 }
@@ -137,6 +138,7 @@ button.ui.fade.animated.button {
     scroll-margin-right: 30px;
     position: relative;
     z-index: 1;
+    height: 360px;
   }
 
   .gridTileOnLeft {
@@ -177,8 +179,9 @@ button.ui.fade.animated.button {
 }
 
 .OnRight {
-    width: 480px;
+    width: 480px !important;
     height: 360px; /* Custom thumbnails here*/
+    transform: translateY(0%) !important;
 }
 
 .videoContainer {
@@ -218,6 +221,14 @@ button.ui.fade.animated.button {
   margin-left: 10px !important;
 }
 
+.addPopup {
+  bottom: 0px !important;
+  right: 0px !important;
+  margin-bottom: 300px !important;
+  margin-right: 20px !important;
+  position: absolute;
+}
+
 .popupContainer {
   bottom: 0 !important;
   right: 0;
@@ -226,6 +237,29 @@ button.ui.fade.animated.button {
   background-color: white;
   width: 2em;
   height: 2em;
+}
+
+.videoPlayButtonRight {
+  bottom: 0px !important;
+  position: absolute;
+  right: 0px;
+  margin-bottom: 133px !important;
+  margin-right: 165px !important;
+  background-color: rgba(0,0,0,0) !important;
+  z-index: 1;
+}
+
+.myBigCenterTriangle {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 18.5px 0 18.5px 33px;
+  border-color: transparent transparent transparent #ffffff;
+  bottom: 0px !important;
+  position: absolute;
+  right: 0px;
+  margin-bottom: 165px !important;
+  margin-right: 222px !important;
 }
 
 
