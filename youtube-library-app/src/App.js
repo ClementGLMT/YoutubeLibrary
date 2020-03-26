@@ -2,9 +2,9 @@ import React from 'react';
 import './App.css';
 import LeftPanel from './components/leftPanel';
 import RightPanel from './components/rightPanel';
+import {Header} from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import { store } from "./store";
-import {setUser} from './actions';
 
 
 
@@ -30,12 +30,13 @@ export default class App extends React.Component {
 
     return (
 
-      <div className="App"> 
+      <div className="App">
 
-        <header className = "App-header">
-          <div>Your Youtube Library</div>
-        </header>
-    
+
+        <Header className='App-header'>
+          Your Youtube library
+        </Header>
+
       <LeftPanel className= "leftPanel" user= {store.getState().SetUser.user}/>
   
       <RightPanel className = "rightPanel" user= {store.getState().SetUser.user}/>

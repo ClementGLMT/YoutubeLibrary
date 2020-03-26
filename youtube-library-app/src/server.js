@@ -148,8 +148,16 @@ function connectAPI() {
                 }
               })
               .then(function (response) {
-                  var results = {videos: []};
-                  for (let i = 0; i < req.body.maxResults; i++) {
+                  var results = {videos: [], status: ''};
+                  if(response.data.items.length === 0){
+                      res.json({
+                          status: 'No results'
+                      })
+                      console.log("No results");
+                  }
+                  else {
+                    results.status = 'Ok';
+                    for (let i = 0; i < req.body.maxResults; i++) {
                         results.videos.push({
                             id: response.data.items[i].id.videoId, 
                             title: response.data.items[i].snippet.title,
@@ -158,6 +166,8 @@ function connectAPI() {
                   }
                   console.log(JSON.stringify(results));
                   res.json(results);
+                  }
+
               })
               .catch(function (error) {
                 console.log(error);

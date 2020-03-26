@@ -113,7 +113,7 @@ export default class leftPanel extends React.Component{
     render(){
 
 
-            //console.log("States in left panel : "+JSON.stringify(store.getState()));
+            console.log("Rendering in left panel : "+JSON.stringify(store.getState().DataLoading.leftPanel.videos));
 
             return (
                 <div className='leftPanel'>

@@ -30,6 +30,7 @@ export default function dataLoading (state = initialState, action)  {
             var rep = state;
             //rep
             rep.rightPanel.videos = action.payload.results;
+            //rep.rightPanel.isLoaded = true;
             return rep;
 
         case 'IS_SEARCHING': 

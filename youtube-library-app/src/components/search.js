@@ -25,7 +25,7 @@ export default class Search extends React.Component {
         }
         
        console.log("LastDisp : "+lastDisp);
-       console.log("Previous right panel state modified "+JSON.stringify(actualRightDisp))
+       //console.log("Previous right panel state modified "+JSON.stringify(actualRightDisp))
       store.dispatch(showSearchAndResults(lastDisp));
       }
 

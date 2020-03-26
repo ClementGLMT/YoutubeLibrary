@@ -174,32 +174,22 @@ export function resultsFetchData(url, body) {
 
             }
             store.dispatch(resultsAreLoading(false));
-            console.log("Got raw rfesponse : "+JSON.stringify(response.data));
-            var data = response.data;
-            for (let i = 0; i < data.videos.length; i++) {
-                data.videos[i]['subtitle'] = '';
-                data.videos[i]['isParsed'] = false;
+            if(response.data.status === 'No results') {
+                store.dispatch(resultsHasErrored(true));
             }
-            //var data = JSON.parse(response.data);
-            //console.log("Got raw rfesponse : "+JSON.stringify(data));
-            store.dispatch(resultsFetchDataSuccess(response.data.videos));
+            else {
+                console.log("Got raw rfesponse : "+JSON.stringify(response.data));
+                var data = response.data;
+                for (let i = 0; i < data.videos.length; i++) {
+                    data.videos[i]['subtitle'] = '';
+                    data.videos[i]['isParsed'] = false;
+                }
+                store.dispatch(resultsHasErrored(false));
+                store.dispatch(resultsFetchDataSuccess(data.videos));
+            }
         })
         .catch( function(err) {
             console.log(err);
         })
-        /*
-        fetch(url, body)
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-                console.log("Got raw rfesponse : "+JSON.stringify(response))
-                store.dispatch(resultsAreLoading(false));
-                return response;
-            })
-            .then((response) => {response.json(); console.log("REsponse got : "+response)})
-            .then((items) => store.dispatch(resultsFetchDataSuccess(items)))
-            .catch(() => store.dispatch(resultsHasErrored(true)));
-            */
     };
 }

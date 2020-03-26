@@ -2,6 +2,7 @@ import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import './components.css';
 import {store} from '../store';
+import {Transition} from 'semantic-ui-react';
 import RightSearchResults from './rightSearchResults';
 import RightVideoPlayer from './rightVideoPlayer';
 import RightWelcome from './rightWelcome';
@@ -11,15 +12,27 @@ export default class rightPanel extends React.Component {
 
   constructor(props) {
     super(props);
+    this.visible= false;
+    this.update = false;
 
   }
 
+  componentDidMount(){
+    this.visible = !this.visible;
+  }
+
+  componentDidUpdate() {
+    this.visible = !this.visible;
+  }
+
+  /*componentWillUnmount(){
+    this.visible = false;
+  }*/
     render(){
 
 
       var rightState = store.getState().ShowOnRight;
-
-      //console.log("Testing with rightState: "+JSON.stringify(rightState));
+      console.log("Testing right with rightState: "+JSON.stringify(rightState));
       //console.log("Data on right : "+JSON.stringify(store.getState().DataLoading.rightPanel.videos));
 
       
@@ -28,13 +41,18 @@ export default class rightPanel extends React.Component {
           <RightWelcome />
         );
       }
-
+      
       if(rightState.rightShowSearchAndResults) {
+        //this.visible = true;
         return (
-          <RightSearchResults data = {store.getState().DataLoading.rightPanel.videos}/>
+          <Transition.Group  animation='fade' duration={500}>
+            {rightState.rightShowSearchAndResults &&
+              <RightSearchResults />
+            }            
+          </Transition.Group>
         );
       }
-
+      
       if(rightState.rightShowVideo) {
         console.log("Rendering video player");
         return (
@@ -42,15 +60,26 @@ export default class rightPanel extends React.Component {
         );
       }
 
-      return (
-        <div>
-
-        </div>
-      );
-
-
 
       
     }
 
 };
+
+/*if(rightState.rightShowSearchAndResults) {
+  //this.visible = true;
+  return (
+    <Transition.Group  animation='fade' duration={500}>
+      {rightState.rightShowSearchAndResults &&
+        <RightSearchResults />
+      }            
+    </Transition.Group>
+  );
+}
+
+if(rightState.rightShowVideo) {
+  console.log("Rendering video player");
+  return (
+    <RightVideoPlayer />
+  );
+}*/

@@ -5,7 +5,7 @@ import './components.css';
 import {updateListReducer, resultsFetchData, isSearching} from '../actions';
 import { store } from '../store';
 
-//const axios = require('axios');
+const axios = require('axios');
 
 
 
@@ -23,19 +23,13 @@ export default class searchForm extends React.Component {
         var self = this;
         store.dispatch(isSearching(true, this.maxRes));
         //var data;
-        /*console.log(resultsFetchData('http://localhost:2999/search', {
-            body: {
-                maxResults: self.maxRes,
-                keyword: self.inputSearch
-            }
-        }));*/
         var action= resultsFetchData('http://localhost:2999/search', {
                 maxResults: self.maxRes,
                 keyword: self.inputSearch
         });
         console.log("ACTION :"+action);
         action();
-        /*store.dispatch(resultsFetchData('http://localhost:2999/search', {
+       /* store.dispatch(resultsFetchData('http://localhost:2999/search', {
             body: {
                 maxResults: self.maxRes,
                 keyword: self.inputSearch
@@ -48,8 +42,8 @@ export default class searchForm extends React.Component {
         })
         .then(function(response) {
             console.log(JSON.stringify(response.data));
-            //self.data = response.data;
-            self.dispatchUpdateList('righPanel', response.data);
+            self.data = response.data;
+            self.dispatchUpdateList('righPanel', self.data);
         })
         .catch(function(err) {
             console.log(err);

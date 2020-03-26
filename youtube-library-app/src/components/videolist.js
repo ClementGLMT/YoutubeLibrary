@@ -4,6 +4,7 @@ import tileData from './tileData';
 import VideoTile from './videoTile'
 import {store} from '../store';
 import { Icon, Header, Button, Image, Modal, Input } from 'semantic-ui-react';
+import Divider from '@material-ui/core/Divider';
 import {modalAction} from '../actions';
 import './components.css';
 import 'semantic-ui-css/semantic.min.css';
@@ -84,10 +85,11 @@ export default class VideoList extends React.Component {
     }*/
       this.data = this.props.data;
 
-      if(this.props.side === 'OnLeft')
+      //if(this.props.side === 'OnLeft')
       console.log("Data in videoList left before treatment: "+JSON.stringify(this.data));
   
     for (let i = 0; i < this.data.length; i++) {
+      this.data[i]['isParsed'] = false;
       var data2 = this.getTitleAndSubtitle(this.data[i]);
       this.data[i] = data2;
     }
@@ -100,13 +102,14 @@ export default class VideoList extends React.Component {
 
     if(this.props.side === 'OnLeft')
       console.log("Data in videoList Left after treatment: "+JSON.stringify(this.data));
+      console.log("States : in videolist right"+JSON.stringify(store.getState().DataLoading.rightPanel));
 
     return (
         <div className={'root'+this.props.side} >
           <GridList cellHeight={180} className={'gridList'+this.props.side} cols={1}>
             {this.data.map(tile => (
           
-                <VideoTile side={this.props.side} key={tile.id} data={tile} gridTileClass= {'gridTile'+this.props.side} />
+            <VideoTile side={this.props.side} key={tile.id} data={tile} gridTileClass= {'gridTile'+this.props.side} />
             
             ))}
           </GridList>
