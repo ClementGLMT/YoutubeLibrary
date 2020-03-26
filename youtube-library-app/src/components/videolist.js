@@ -2,6 +2,10 @@ import React from 'react';
 import GridList from '@material-ui/core/GridList';
 import tileData from './tileData';
 import VideoTile from './videoTile'
+import {store} from '../store';
+import { Icon, Header, Button, Image, Modal, Input } from 'semantic-ui-react';
+import Divider from '@material-ui/core/Divider';
+import {modalAction} from '../actions';
 import './components.css';
 import 'semantic-ui-css/semantic.min.css';
 
@@ -11,59 +15,106 @@ export default class VideoList extends React.Component {
 
   constructor(props) {
     super(props);
+    this.data = [];
+    this.update = false;
+  }
 
-    this.state = {
-      user: this.props.user,
-      gridWidth: '',
-      thumbsize: '',
-      gridClass: '',
-      gridTileClass: '',
-      rootClass: '',
-    }
 
-    if(this.props.side === 'left' ){
-      this.state.rootClass = 'rootLeft'
-      this.state.gridWidth = '340px';
-      this.state.thumbsize = 'medium';
-      this.state.gridClass = 'gridListLeft';
-      this.state.gridTileClass = 'gridTileLeft';
-    }
 
-    if(this.props.side === 'right'){
-      this.state.rootClass = 'rootRight'
-      this.state.gridWidth =  '500px';
-      this.state.thumbsize = 'high';
-      this.state.gridClass = 'gridListRight';
-      this.state.gridTileClass = 'gridTileRight';
+  getTitleAndSubtitle(video) {
 
-    }
+
+    console.log("Video title tested: "+video.title);
+      if(video.title.length > 41) {
+        //console.log('')
+      console.log("Video title tested: "+video.title+" > 41");
+
+        if(video.isParsed === false){
+
+          var title = video.title;
+          var subtitle='';
+          var fullTitle = title;
+          var arr = title.split(' ');
+          title = '';
+          console.log(arr);
+          var i=0;
+          while ((title.length + arr[i].length) < 40) {
+            title = title.concat(arr[i]);
+            title = title.concat(' ');
+            console.log("Title = "+ title+" for i = "+i);
+              i++;
+          }
+          console.log("break for i = "+i);
+    
+          for (let j = i; j < arr.length;j++) {
+            subtitle = subtitle.concat(arr[j]);  
+            subtitle = subtitle.concat(' ');
+           console.log("subtitle = "+ subtitle+" for j = "+j);
+          }
+          return {
+            ...video,
+            title: title,
+            subtitle: subtitle,
+            isParsed: true
+          }
+        }
+
+      }
+    return video;
+  }
+
+  componentDidMount() {
+    this.data = [];
+  }
+
+  shouldComponentUpdate(){
+    console.log("Should component update called");
+      return this.update;
   }
 
   
 
   render(){
-
-    var data;
-    if(this.props.isDataLoaded === 0){
+    /*if(!this.props.isDataLoaded){
       console.log("Loading tileData");
       data = tileData;
     }
     else {
       console.log("Loading propsData");
       data = this.props.data;
+    }*/
+      this.data = this.props.data;
+
+      //if(this.props.side === 'OnLeft')
+      console.log("Data in videoList left before treatment: "+JSON.stringify(this.data));
+  
+    for (let i = 0; i < this.data.length; i++) {
+      this.data[i]['isParsed'] = false;
+      var data2 = this.getTitleAndSubtitle(this.data[i]);
+      this.data[i] = data2;
     }
 
-    console.log("Data in videoList : "+JSON.stringify(data));
+    this.update = true;
+
+    /*this.data.map(tile => {
+      console.log(tile);
+    })*/
+
+    if(this.props.side === 'OnLeft')
+      console.log("Data in videoList Left after treatment: "+JSON.stringify(this.data));
+      console.log("States : in videolist right"+JSON.stringify(store.getState().DataLoading.rightPanel));
 
     return (
-        <div className={this.state.rootClass} style={{width: this.state.gridWidth}}>
-          <GridList cellHeight={180} className={this.state.gridClass} cols={1}>
-            {data.map(tile => (
+        <div className={'root'+this.props.side} >
+          <GridList cellHeight={180} className={'gridList'+this.props.side} cols={1}>
+            {this.data.map(tile => (
           
-                <VideoTile key={tile.id} data={tile} gridTileClass= {this.state.gridTileClass} thumbsize={this.state.thumbsize}/>
+            <VideoTile side={this.props.side} key={tile.id} data={tile} gridTileClass= {'gridTile'+this.props.side} />
             
             ))}
           </GridList>
+
+          
         </div>
     );
   }

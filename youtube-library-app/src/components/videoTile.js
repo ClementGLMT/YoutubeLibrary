@@ -1,9 +1,15 @@
 import React from 'react';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import { Icon, Header, Button, Image, Modal, Input, Popup } from 'semantic-ui-react';
+import { Icon, Header, Button, Image, Modal, Input, Transition } from 'semantic-ui-react';
+import Divider from '@material-ui/core/Divider';
+import {store} from '../store';
+import {showVideoPlayer, modalAction, updateListReducer} from '../actions';
 import 'semantic-ui-css/semantic.min.css';
 import './components.css';
+
+const axios = require('axios');
+
 
 
 
@@ -13,135 +19,193 @@ export default class VideoTile extends React.Component {
     constructor(props){
       super(props);
 
-      this.state = {
-        thumbClass : '',
-        title: '',
-        subtitle: '',
-        isRight: ''
-      }
-
       this.inputName = '';
-
-      if(this.props.thumbsize === 'medium'){
-        this.state.thumbClass = 'medium';
-        this.state.isRight = 0;
-      }
-      if(this.props.thumbsize === 'high'){
-        this.state.thumbClass = 'high';
-        this.state.isRight = 1;
-      }
-
-      this.state.title = this.props.data.title;
-      this.state.subtitle = '';
-
-      if(this.props.data.title.length > 41){
-        this.state.title = '';
-        var arr = this.props.data.title.split(' ');
-        console.log(arr);
-        var i=0;
-        while ((this.state.title.length + arr[i].length) < 40) {
-          this.state.title = this.state.title.concat(arr[i]);
-          this.state.title = this.state.title.concat(' ');
-          console.log("Title = "+ this.state.title+" for i = "+i);
-            i++;
-        }
-        console.log("break for i = "+i);
-
-        for (let j = i; j < arr.length;j++) {
-          this.state.subtitle = this.state.subtitle.concat(arr[j]);  
-          this.state.subtitle = this.state.subtitle.concat(' ');
-          console.log("subtitle = "+ this.state.subtitle+" for j = "+j);
-        }
-      }
+      this.addVisible= true;
+      this.inOutVisible = true;
 
     }
 
-    /*<Modal style = {{marginBottom: '10px'}} dimmer={dimmer} open={open} onClose={this.close} size='small'>
-                <Modal.Header>{this.state.title.concat(this.state.subtitle)}</Modal.Header>
-                <Modal.Content image>
-                  <Image
-                    wrapped
-                    size='medium'
-                    src={this.props.data.thumbnails.medium.url}
-                    className = 'medium'
-                  />
-                  <Modal.Description>
-                    <Header style={{marginLeft: 'auto', marginRight: 'auto'}} >What's the new name of your video ?</Header>
-                      <Input placeholder='New name' style={{marginTop: '28.375px', marginLeft: '56.55px'}}/>
-                  </Modal.Description>
-                </Modal.Content>
-                <Modal.Actions>
-                  <Button negative onClick={this.close}>
-                    Cancel
-                  </Button>
-                  <Button
-                    positive
-                    icon='checkmark'
-                    labelPosition='right'
-                    content="Confirm"
-                    onClick={this.close}
-                  />
-                </Modal.Actions>
-              </Modal>*/
 
-                              /*<Popup on='click' trigger={<Button className='editPopup' icon basic > <Icon name='edit outline'/></Button>} flowing >
-                              <Header as='h4'>New name ?</Header>
-                              <Input placeholder='New name'/>
-                              <Button onClick={()=> {alert('yessai')}}>Confirm</Button>
-                           </Popup>*/
 
-    state = { open: false }
+    openModal(){
+      var video = {
+        title:  this.props.data.title.concat(this.props.data.subtitle),
+        thumbnails: this.props.data.thumbnails,
+        id: this.props.data.id
+      } 
+      console.log('Modal opened by '+JSON.stringify(this.props.data.title.concat(this.props.data.subtitle)));
+      store.dispatch(modalAction('open', video));
+    }
 
-    show = (dimmer) => () => this.setState({ dimmer, open: true })
-    close = () => this.setState({ open: false })
+
+    handlePlay(){
+      this.dispatchShowVideoPlayer({
+        title: this.props.data.title.concat(this.props.data.subtitle),
+        thumbnails: this.props.data.thumbnails,
+        id: this.props.data.id
+      });
+    }
+
+    handleDelete() {
+      var self = this;
+      this.inOutVisible = false;
+      this.update = true;
+
+      var self = this;
+    axios.post('http://localhost:2999/remove', {
+      body: {
+        user: store.getState().SetUser.user,
+        rmid: this.props.data.id
+      }
+    })
+    .then(function(response) {
+      console.log(response);
+      /*self.dispatchToogleDataLoaded('leftPanel');
+      //self.updateLibrary(response.data.videos);
+      self.dispatchToogleDataLoaded('leftPanel');*/
+      var side;
+      if(self.props.side === 'OnLeft')
+        side = 'leftPanel';
+      
+      if(self.props.side === 'OnRight')
+        side = 'rightPanel';
+      
+      self.dispatchUpdateList(side, response.data.videos);
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+
+    }
+
+    handleAdd() {
+      var self = this;
+      var alreadyIn = false;
+
+      var videos = store.getState().DataLoading.leftPanel.videos;
+
+      for (let i = 0; i < videos.length; i++) {
+        if(this.props.data.id === videos[i].id){
+          alreadyIn = true;
+          break;
+        }
+      }
+      if(alreadyIn)
+        alert('Video already in your library !')
+      else {
+
+        this.addVisible = !this.addVisible;
+        console.log("Title added : "+JSON.stringify(this.props.data));
+        axios.post('http://localhost:2999/add', {
+            user: store.getState().SetUser.user,
+            addid: this.props.data.id,
+            addtitle: this.props.data.title.concat(this.props.data.subtitle),
+            thumbnails: JSON.stringify(this.props.data.thumbnails)
+        })
+        .then(function(response) {
+          console.log(response);
+          var side;
+          if(self.props.side === 'OnLeft')
+            side = 'leftPanel';
+          
+          if(self.props.side === 'OnRight')
+            side = 'rightPanel';
+          
+          self.dispatchUpdateList('leftPanel', response.data.videos);
+        })
+        .catch(function(err) {
+          console.log(err);
+        })
+      }
+
+      
+    }
+
+    dispatchUpdateList(panel, videos) {
+      store.dispatch(updateListReducer(panel, videos));
+  }
+
+
+    dispatchShowVideoPlayer(video) {
+
+      var lastDisp;
+      var actualRightDisp = store.getState().ShowOnRight;
+      //console.log("Previous right panel state "+JSON.stringify(actualRightDisp))
+
+      for(var key in actualRightDisp){
+        if(actualRightDisp[key])
+          actualRightDisp[key] = false;
+      }
+      actualRightDisp.videoToPlay = video;
+     //console.log("LastDisp : "+lastDisp);
+     //console.log("Previous right panel state modified "+JSON.stringify(actualRightDisp))
+      store.dispatch(showVideoPlayer(actualRightDisp));
+    }
 
       render() {
 
-        const { open, dimmer } = this.state;
+        var thumbsize;
+        if(this.props.side === 'OnLeft')
+          thumbsize = 'medium';
+        else 
+          thumbsize = 'high';
+
+        //console.log('State of tile "'+this.props.data.title.concat(this.props.data.subtitle)+'": '+JSON.stringify(store.getState()));
+        //console.log("Rendering tile of "+this.props.data.title.concat(this.props.data.subtitle))
+
+        if(store.getState().ModalReducer.isModalOpen === true){
+          //console.log('Opening modal with : '+JSON.stringify(this.props.data));
+        }
+
+        console.log("Delete anim visible : "+this.inOutVisible);
+
+        const button = {};
+
 
         return(
 
+
+          <Transition          
+            animation='drop'
+            duration={500}
+            visible={this.inOutVisible}
+          >
+          <Transition
+          animation='pulse'
+          duration={500}
+          visible={this.addVisible}
+        >
           <div>
             <GridListTile  key={this.props.data.id} cols={1} className={this.props.gridTileClass}>
-                <img src={this.props.data.thumbnails[this.props.thumbsize].url} className={this.state.thumbClass} alt={this.state.title.concat(this.state.subtitle)}/>
-                <GridListTileBar title={this.state.title} subtitle={this.state.subtitle} >
+                <img src={this.props.data.thumbnails[thumbsize].url} className={this.props.side} alt={this.props.data.title.concat(this.props.data.subtitle)}/>
+                <GridListTileBar title={this.props.data.title} subtitle={this.props.data.subtitle} >
                 </GridListTileBar>
 
-                { !this.state.isRight &&
-                  <Button className='editPopup' icon onClick={this.show('blurring')}> <Icon name='edit outline' /></Button>
+                { (this.props.side === 'OnLeft') 
+                  ? <div>
+                      <Button className='editPopup' icon onClick={() => {this.openModal()}}> <Icon name='edit outline' /></Button>
+                      <Button className='deletePopup' icon onClick={() => {this.handleDelete()}}> <Icon name='delete' /></Button>
+                      <Button  onClick = {() => {this.handlePlay()}} icon className='videoPlayButton' > 
+                        <Icon  size ='huge'  name='youtube play' /> 
+                      </Button>
+                      <div className='myCenterTriangle'> </div>
+                    </div>
+                  : <div>
+                    <Button className = 'addPopup' icon onClick= {() => {this.handleAdd()}}>
+                      <Icon  size = 'big' name='add square' />
+                    </Button>
+                    <Button  onClick = {() => {this.handlePlay()}} icon className='videoPlayButtonRight' > 
+                      <Icon  size ='massive'  name='youtube play' /> 
+                    </Button>   
+                    <div className='myBigCenterTriangle'> </div>                 
+                  </div>
                 }
-
             </GridListTile>
+              <Divider />
+              </div>
+          </Transition>
+        </Transition>
 
-            <Modal style = {{marginBottom: '10px'}} dimmer={dimmer} open={open} onClose={this.close} size='small'>
-                <Modal.Header>{this.state.title.concat(this.state.subtitle)}</Modal.Header>
-                <Modal.Content image>
-                  <Image
-                    wrapped
-                    size='medium'
-                    src={this.props.data.thumbnails.medium.url}
-                    className = 'medium'
-                  />
-                  <Modal.Description>
-                    <Header style={{marginLeft: 'auto', marginRight: 'auto'}} >What's the new name of your video ?</Header>
-                      <Input onChange={(event,data)=> {this.inputName = data.value}} placeholder='New name' style={{marginTop: '28.375px', marginLeft: '56.55px'}}/>
-                  </Modal.Description>
-                </Modal.Content>
-                <Modal.Actions>
-                  <Button negative onClick={this.close}>
-                    Cancel
-                  </Button>
-                  <Button
-                    positive
-                    icon='checkmark'
-                    labelPosition='right'
-                    content="Confirm"
-                    onClick={() => {alert(this.inputName);  this.close();}}
-                  />
-                </Modal.Actions>
-              </Modal>
-              
-            </div>
 
         );
       }

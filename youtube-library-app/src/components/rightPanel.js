@@ -1,47 +1,85 @@
 import React from 'react';
-import VideoList from './videolist';
 import 'semantic-ui-css/semantic.min.css';
-import SearchForm from './searchForm';
 import './components.css';
-import VideoPlayer from './videoPlayer';
-import { Header } from 'semantic-ui-react';
+import {store} from '../store';
+import {Transition} from 'semantic-ui-react';
+import RightSearchResults from './rightSearchResults';
+import RightVideoPlayer from './rightVideoPlayer';
+import RightWelcome from './rightWelcome';
 
 
 export default class rightPanel extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      user: this.props.user,
-      isDataLoaded: 0,
-    }
+    this.visible= false;
+    this.update = false;
+
   }
 
+  componentDidMount(){
+    this.visible = !this.visible;
+  }
+
+  componentDidUpdate() {
+    this.visible = !this.visible;
+  }
+
+  /*componentWillUnmount(){
+    this.visible = false;
+  }*/
     render(){
-      console.log("Rendering right panel with isDataLoaded: "+this.state.isDataLoaded);
-      var VideoName = 'Okonami no suzuki';
+
+
+      var rightState = store.getState().ShowOnRight;
+      console.log("Testing right with rightState: "+JSON.stringify(rightState));
+      //console.log("Data on right : "+JSON.stringify(store.getState().DataLoading.rightPanel.videos));
+
       
+      if(rightState.rightShowWelcome) {
         return (
+          <RightWelcome />
+        );
+      }
+      
+      if(rightState.rightShowSearchAndResults) {
+        //this.visible = true;
+        return (
+          <Transition.Group  animation='fade' duration={500}>
+            {rightState.rightShowSearchAndResults &&
+              <RightSearchResults />
+            }            
+          </Transition.Group>
+        );
+      }
+      
+      if(rightState.rightShowVideo) {
+        console.log("Rendering video player");
+        return (
+          <RightVideoPlayer />
+        );
+      }
 
-          <div className='rightPanel'>
-          <SearchForm className='searchForm'/>
 
-            <VideoList side='right' user={this.state.user} isDataLoaded={this.state.isDataLoaded}/>
-          </div>
-
-
-    );
-
-    /*return (
-      <div className='rightPanel'>
-          <div className='videoContainer'>
-              <Header > {VideoName} </Header>
-              <VideoPlayer className = 'videoPlayer' url='https://www.youtube.com/watch?v=txkzJVZhVYc' thumburl='https://image.noelshack.com/fichiers/2020/12/5/1584732752-yagami-light.jpg'/>
-          </div>
-      </div>
-
-
-    );*/
+      
     }
 
 };
+
+/*if(rightState.rightShowSearchAndResults) {
+  //this.visible = true;
+  return (
+    <Transition.Group  animation='fade' duration={500}>
+      {rightState.rightShowSearchAndResults &&
+        <RightSearchResults />
+      }            
+    </Transition.Group>
+  );
+}
+
+if(rightState.rightShowVideo) {
+  console.log("Rendering video player");
+  return (
+    <RightVideoPlayer />
+  );
+}*/

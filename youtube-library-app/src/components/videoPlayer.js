@@ -10,9 +10,11 @@ export default class VideoPlayer extends React.Component {
 
     render() {
 
+        console.log("Rendering Videoplayer to display ");
+
         return(
 
-            <ReactPlayer className='reactPlayer' width='960px' height='540px' url={this.props.url} controls playing='true' light={this.props.thumburl}/>
+            <ReactPlayer className='reactPlayer' width='960px' height='540px' url={this.props.url} controls playing={true} light={this.props.thumburl}/>
         
         );
     }

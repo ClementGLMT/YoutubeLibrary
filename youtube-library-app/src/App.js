@@ -2,34 +2,24 @@ import React from 'react';
 import './App.css';
 import LeftPanel from './components/leftPanel';
 import RightPanel from './components/rightPanel';
-import 'semantic-ui-css/semantic.min.css'
+import {Header} from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
+import { store } from "./store";
 
 
 
 
 export default class App extends React.Component {
-
-    constructor(props) {
-    super(props);
-    this.state = {
-      user: this.getUser()
-      }
-    this.header = React.createRef();
-    this.headerClass= '';
-    }
   
-
-  getUser(){
-
-   var regex = /http:\/\/localhost:3000\/\?user=([\w-]{1,})/;
-
-   var url = window.location.href;
-   var user = url.match(regex)[1];
-   return user;
+  constructor(props) {
+    super(props);
   }
+
+
 
   render(){
 
+    console.log("User in App.js : "+store.getState().SetUser.user);
 
     /*var offTop = this.header.getBoundingClientRect().top;
     if (window.pageYOffset > offTop) {
@@ -40,15 +30,16 @@ export default class App extends React.Component {
 
     return (
 
-      <div className="App"> 
+      <div className="App">
 
-        <header ref={this.header} className = "App-header">
-          <div>Your Youtube Library</div>
-        </header>
-    
-      <LeftPanel className= "leftPanel" user= {this.state.user}/>
+
+        <Header className='App-header'>
+          Your Youtube library
+        </Header>
+
+      <LeftPanel className= "leftPanel" user= {store.getState().SetUser.user}/>
   
-      <RightPanel className = "rightPanel" user= {this.state.user}/>
+      <RightPanel className = "rightPanel" user= {store.getState().SetUser.user}/>
 
       </div>
   

@@ -6,7 +6,7 @@
     height: 15%;
     margin-top: 2vh;
     position: relative;
-    /*z-index: 500;*/
+    z-index: 500;
 }
 
 .searchForm {
@@ -29,15 +29,31 @@
 
 .rightPanel {
   float: left;
-  margin-left: 347px;
-  width: calc(100% - 347px);
-  margin-top: 2vh;
+  margin-left: 367px;
+  width: calc(100% - 365px);
   height: 100%;
   position: relative;
   display: flex;
   flex-wrap: wrap;
   z-index: 800;
+  background-color: white;
 
+}
+
+.divider {
+
+}
+
+
+
+.videoPlayButton {
+  bottom: 0px !important;
+  position: absolute;
+  right: 0px;
+  margin-bottom: 70px !important;
+  margin-right: 116px !important;
+  background-color: rgba(0,0,0,0) !important;
+  z-index: 1;
 }
 
 .videoPlayer {
@@ -53,10 +69,13 @@
 
 .libraryName.ui.header:first-child {
     height: 5%;
-    width: 340px;
+    width: 350px;
     text-align: center;
     align-items: center;
     font-size: 2em;
+    margin-top: 2vh;
+    margin-left: 10px;
+    margin-bottom: 1px;
 }
 
 .videoList {
@@ -66,30 +85,38 @@
 
 .leftPanel  {
     float: left;
-    width: 340px;
-    height: 88vh;
-    margin-left: 0.5em;
-    margin-top: 12vh;
+    width: 365px;
+    height: 90vh;
+    margin-top: 10vh;
     position: fixed; 
+    background-color: #e1e1e1;
+    border-style: groove;
+    border-top: none;
+    border-bottom: none;
   }
+
+
 
 button.ui.fade.animated.button {
     height: 5% ;
     width: 340px ;
     align-items: center ;
     margin: 0 auto ;
+    margin-left: 10px;
 }
 
-.rootLeft {
+.rootOnLeft {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     overflow-y: hidden;
     float: left;
-    height: 88%;
+    height: 86%;
+    width: 340px;
+    margin-left: 10px;
   }
 
-.rootRight {
+.rootOnRight {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -97,21 +124,41 @@ button.ui.fade.animated.button {
   height: 86%;
   margin: auto;
   position: relative;
+  width: 490px;
   z-index: 400;
+  margin-top: 30px;
 
 }
 
-  .gridListLeft {
+.welcome {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.title {
+  margin-top: 5vh !important;
+}
+
+.title2 {
+  margin-top: 10%;
+}
+
+.list {
+  margin-top: 5%;
+}
+
+  .gridListOnLeft {
     width: 340px;
     height: 100%;
     float: left;
+    display: block !important;
   }
 
   ul.MuiGridList-root.gridListLeft {
     display: block;
   }
 
-  .gridListRight {
+  .gridListOnRight {
     width: 490px;
     height: 100%;
     float: left;
@@ -119,19 +166,22 @@ button.ui.fade.animated.button {
     z-index: 100;
   }
 
-  .gridTileRight {
+  .gridTileOnRight {
     width: 480px;
     scroll-margin-right: 30px;
     position: relative;
     z-index: 1;
+    height: 360px;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
-  .gridTileLeft {
-    width: 320px;
+  .gridTileOnLeft {
+    width: 320px ;
     scroll-margin-right: 30px;
     margin-top: 10px;
     height: 180px;
-
+    margin-bottom: 10px;
   }
 
   .react-player__preview {
@@ -144,14 +194,30 @@ button.ui.fade.animated.button {
     /*margin-top: 12vh;*/
 }
 
-.medium {
+.OnLeft {
     width: 320px;
     height: 180px; /* Custom thumbnails here*/
+    transform: translateY(0%) !important;
+
 }
 
-.high {
-    width: 480px;
+.myCenterTriangle {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 9px 0 9px 17px;
+  border-color: transparent transparent transparent #ffffff;
+  bottom: 0px !important;
+  position: absolute;
+  right: 0px;
+  margin-bottom: 92px !important;
+  margin-right: 149px !important;
+}
+
+.OnRight {
+    width: 480px !important;
     height: 360px; /* Custom thumbnails here*/
+    transform: translateY(0%) !important;
 }
 
 .videoContainer {
@@ -178,6 +244,25 @@ button.ui.fade.animated.button {
   position: absolute !important;
   margin-bottom: 135px !important;
   background-color: white;
+  margin-right: 10px !important;
+
+}
+
+.deletePopup {
+  bottom: 0 !important;
+  left: 0 !important;
+  position: absolute !important;
+  margin-bottom: 135px !important;
+  background-color: white;
+  margin-left: 10px !important;
+}
+
+.addPopup {
+  bottom: 0px !important;
+  right: 0px !important;
+  margin-bottom: 300px !important;
+  margin-right: 20px !important;
+  position: absolute;
 }
 
 .popupContainer {
@@ -188,6 +273,29 @@ button.ui.fade.animated.button {
   background-color: white;
   width: 2em;
   height: 2em;
+}
+
+.videoPlayButtonRight {
+  bottom: 0px !important;
+  position: absolute;
+  right: 0px;
+  margin-bottom: 133px !important;
+  margin-right: 165px !important;
+  background-color: rgba(0,0,0,0) !important;
+  z-index: 1;
+}
+
+.myBigCenterTriangle {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 18.5px 0 18.5px 33px;
+  border-color: transparent transparent transparent #ffffff;
+  bottom: 0px !important;
+  position: absolute;
+  right: 0px;
+  margin-bottom: 165px !important;
+  margin-right: 222px !important;
 }
 
 
