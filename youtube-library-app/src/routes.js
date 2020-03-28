@@ -5,6 +5,7 @@ import App from './App';
 const Routes = () => (
     <Router>
             <Route exact path="/" component={App} />
+            <Route exact path='/library' component={App} />
     </Router>
 );
 

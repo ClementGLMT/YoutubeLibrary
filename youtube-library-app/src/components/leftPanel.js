@@ -5,6 +5,7 @@ import Search from './search';
 import './components.css';
 import 'semantic-ui-css/semantic.min.css';
 import { store} from '../store';
+import {toast} from 'react-toastify';
 import {updateListReducer, setUser, modalAction} from '../actions';
 const axios = require('axios');
 
@@ -16,7 +17,6 @@ export default class leftPanel extends React.Component{
     constructor(props) {
         super(props);
         this.data = {name: '', videos: []};
-        this.getUser();
       }
 
       getLibraryContent() {
@@ -68,7 +68,7 @@ export default class leftPanel extends React.Component{
 
       handlePositiveClick() {
         var self = this;
-        console.log("User when requesting : "+store.getState().SetUser.user);
+        //console.log("User when requesting : "+store.getState().SetUser.user);
 
         axios.post('http://localhost:2999/rename', {
             body: {
@@ -78,7 +78,7 @@ export default class leftPanel extends React.Component{
             }
         })
         .then(function(response) {
-            console.log(response);
+            //console.log(response);
             self.dispatchUpdateList('leftPanel', response.data.videos);
         })
         .catch (function(err) {
@@ -87,23 +87,11 @@ export default class leftPanel extends React.Component{
 
 
         this.closeModal();
+        toast.success("Video renamed !");
       }
 
 
 
-      getUser(){
-
-        var regex = /http:\/\/localhost:3000\/\?user=([\w-]{1,})/;
-     
-        var url = window.location.href;
-        var user = url.match(regex)[1];
-        this.dispatchSetUser(user);
-       }
-     
-       dispatchSetUser(user) {
-         store.dispatch(setUser(user));
-         console.log("User dispatch done");
-       }
 
   
 

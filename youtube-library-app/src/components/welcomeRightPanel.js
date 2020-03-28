@@ -1,5 +1,4 @@
 import React from 'react';
-import {Header} from 'semantic-ui-react'
 
 
 
@@ -27,6 +26,10 @@ render() {
             </ul>
 
             <h2>Have fun !</h2>
+
+            {(this.props.links !== undefined) && 
+                this.props.links
+            }
 
 
         </div>

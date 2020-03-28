@@ -1,10 +1,12 @@
 import React from 'react';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import { Icon, Header, Button, Image, Modal, Input, Transition } from 'semantic-ui-react';
+import { Icon, Button, Transition } from 'semantic-ui-react';
 import Divider from '@material-ui/core/Divider';
 import {store} from '../store';
-import {showVideoPlayer, modalAction, updateListReducer} from '../actions';
+import {showVideoPlayer, modalAction, updateListReducer, toogleVisible} from '../actions';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import 'semantic-ui-css/semantic.min.css';
 import './components.css';
 
@@ -20,8 +22,9 @@ export default class VideoTile extends React.Component {
       super(props);
 
       this.inputName = '';
-      this.addVisible= true;
-      this.inOutVisible = true;
+      this.visible= true;
+      this.animation = ''
+      this.update = false;
 
     }
 
@@ -39,6 +42,8 @@ export default class VideoTile extends React.Component {
 
 
     handlePlay(){
+      console.log("Dispatching video title : "+this.props.data.title.concat(this.props.data.subtitle));
+      store.dispatch(toogleVisible())
       this.dispatchShowVideoPlayer({
         title: this.props.data.title.concat(this.props.data.subtitle),
         thumbnails: this.props.data.thumbnails,
@@ -48,10 +53,8 @@ export default class VideoTile extends React.Component {
 
     handleDelete() {
       var self = this;
-      this.inOutVisible = false;
-      this.update = true;
-
-      var self = this;
+      this.animation = 'drop';
+      this.visible = !this.visible;
     axios.post('http://localhost:2999/remove', {
       body: {
         user: store.getState().SetUser.user,
@@ -60,9 +63,6 @@ export default class VideoTile extends React.Component {
     })
     .then(function(response) {
       console.log(response);
-      /*self.dispatchToogleDataLoaded('leftPanel');
-      //self.updateLibrary(response.data.videos);
-      self.dispatchToogleDataLoaded('leftPanel');*/
       var side;
       if(self.props.side === 'OnLeft')
         side = 'leftPanel';
@@ -76,13 +76,17 @@ export default class VideoTile extends React.Component {
       console.log(err);
     })
 
+    //this.updatethis.update = true;
+    toast.success("Video removed from your library !");
+
     }
 
     handleAdd() {
       var self = this;
       var alreadyIn = false;
-
+      console.log("In Handle add");
       var videos = store.getState().DataLoading.leftPanel.videos;
+      console.log("In Handle add2");
 
       for (let i = 0; i < videos.length; i++) {
         if(this.props.data.id === videos[i].id){
@@ -90,11 +94,20 @@ export default class VideoTile extends React.Component {
           break;
         }
       }
-      if(alreadyIn)
-        alert('Video already in your library !')
+      if(alreadyIn){
+        this.animation = 'shake';
+        this.visible = !this.visible;
+        toast.error("Video already in library !");        
+        this.dispatchUpdateList('leftPanel', videos);
+      }
       else {
 
-        this.addVisible = !this.addVisible;
+        this.animation = 'pulse';
+        this.visible = !this.visible;
+        console.log("Heho");
+
+        toast.success("Video added to library !")
+        console.log("Heho2");
         console.log("Title added : "+JSON.stringify(this.props.data));
         axios.post('http://localhost:2999/add', {
             user: store.getState().SetUser.user,
@@ -103,14 +116,17 @@ export default class VideoTile extends React.Component {
             thumbnails: JSON.stringify(this.props.data.thumbnails)
         })
         .then(function(response) {
-          console.log(response);
-          var side;
-          if(self.props.side === 'OnLeft')
-            side = 'leftPanel';
-          
-          if(self.props.side === 'OnRight')
-            side = 'rightPanel';
-          
+          var disp = {
+            videos: response.data.videos,
+          }
+          console.log("Heho3");
+
+          /*for (let i = 0; i < videos.length; i++) {
+            disp.videos[i]['subtitle']  =self.props.data.subtitle;
+            disp.videos[i]['isParsed'] = false;
+            
+          }*/
+          console.log("giving to reducer : "+JSON.stringify(disp));
           self.dispatchUpdateList('leftPanel', response.data.videos);
         })
         .catch(function(err) {
@@ -118,17 +134,27 @@ export default class VideoTile extends React.Component {
         })
       }
 
-      
+      //this.update = true;
+      //console.log("Update asked");
     }
 
     dispatchUpdateList(panel, videos) {
       store.dispatch(updateListReducer(panel, videos));
   }
 
+  /*shouldComponentUpdate() {
+    return this.update;
+  }*/
+
+  componentDidUpdate() {
+    console.log("Updating tile of "+this.props.data.title.concat(this.props.data.subtitle))
+    //this.visible = !this.visible;
+
+  }
+
 
     dispatchShowVideoPlayer(video) {
 
-      var lastDisp;
       var actualRightDisp = store.getState().ShowOnRight;
       //console.log("Previous right panel state "+JSON.stringify(actualRightDisp))
 
@@ -137,8 +163,10 @@ export default class VideoTile extends React.Component {
           actualRightDisp[key] = false;
       }
       actualRightDisp.videoToPlay = video;
+      store.dispatch(toogleVisible());
+
      //console.log("LastDisp : "+lastDisp);
-     //console.log("Previous right panel state modified "+JSON.stringify(actualRightDisp))
+     //console.log("Previous right panel state modified in before dispatching SHOW VIDEO PLAYER"+JSON.stringify(actualRightDisp))
       store.dispatch(showVideoPlayer(actualRightDisp));
     }
 
@@ -151,38 +179,19 @@ export default class VideoTile extends React.Component {
           thumbsize = 'high';
 
         //console.log('State of tile "'+this.props.data.title.concat(this.props.data.subtitle)+'": '+JSON.stringify(store.getState()));
-        //console.log("Rendering tile of "+this.props.data.title.concat(this.props.data.subtitle))
 
         if(store.getState().ModalReducer.isModalOpen === true){
           //console.log('Opening modal with : '+JSON.stringify(this.props.data));
         }
 
-        console.log("Delete anim visible : "+this.inOutVisible);
+        //console.log("Delete anim visible : "+this.inOutVisible);
 
-        const button = {};
+        console.log("Rendering tile of "+this.props.data.title.concat(this.props.data.subtitle))
 
+        var buttons = <div />;
 
-        return(
-
-
-          <Transition          
-            animation='drop'
-            duration={500}
-            visible={this.inOutVisible}
-          >
-          <Transition
-          animation='pulse'
-          duration={500}
-          visible={this.addVisible}
-        >
-          <div>
-            <GridListTile  key={this.props.data.id} cols={1} className={this.props.gridTileClass}>
-                <img src={this.props.data.thumbnails[thumbsize].url} className={this.props.side} alt={this.props.data.title.concat(this.props.data.subtitle)}/>
-                <GridListTileBar title={this.props.data.title} subtitle={this.props.data.subtitle} >
-                </GridListTileBar>
-
-                { (this.props.side === 'OnLeft') 
-                  ? <div>
+        if(this.props.side === 'OnLeft') {
+          buttons = <div>
                       <Button className='editPopup' icon onClick={() => {this.openModal()}}> <Icon name='edit outline' /></Button>
                       <Button className='deletePopup' icon onClick={() => {this.handleDelete()}}> <Icon name='delete' /></Button>
                       <Button  onClick = {() => {this.handlePlay()}} icon className='videoPlayButton' > 
@@ -190,21 +199,43 @@ export default class VideoTile extends React.Component {
                       </Button>
                       <div className='myCenterTriangle'> </div>
                     </div>
-                  : <div>
-                    <Button className = 'addPopup' icon onClick= {() => {this.handleAdd()}}>
-                      <Icon  size = 'big' name='add square' />
-                    </Button>
-                    <Button  onClick = {() => {this.handlePlay()}} icon className='videoPlayButtonRight' > 
-                      <Icon  size ='massive'  name='youtube play' /> 
-                    </Button>   
-                    <div className='myBigCenterTriangle'> </div>                 
-                  </div>
+        }
+
+        else {
+          buttons = <div>
+                      <Button className = 'addPopup' icon onClick= {() => {this.handleAdd()}}>
+                        <Icon  size = 'big' name='add square' />
+                      </Button>
+                      <Button  onClick = {() => {this.handlePlay()}} icon className='videoPlayButtonRight' > 
+                        <Icon  size ='massive'  name='youtube play' /> 
+                      </Button>   
+                      <div className='myBigCenterTriangle'> </div>                 
+                    </div>
+        }
+
+
+
+        return(
+
+
+          <Transition 
+          animation={this.animation}
+          duration={500}
+          visible={this.visible}
+          >
+          <div className={'tileContainer'+this.props.side}>
+            <GridListTile  key={this.props.data.id} cols={1} className={this.props.gridTileClass}>
+                <img src={this.props.data.thumbnails[thumbsize].url} className={this.props.side} alt={this.props.data.title.concat(this.props.data.subtitle)}/>
+                <GridListTileBar title={this.props.data.title} subtitle={this.props.data.subtitle} >
+                </GridListTileBar>
+
+                { (this.props.side === 'OnLeft' || ((this.props.side === 'OnRight') && (!store.getState().DataLoading.rightPanel.isLoading)) ) &&
+                  buttons
                 }
             </GridListTile>
               <Divider />
               </div>
-          </Transition>
-        </Transition>
+              </Transition>
 
 
         );

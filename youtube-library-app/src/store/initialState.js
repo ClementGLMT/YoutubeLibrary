@@ -71,7 +71,8 @@ const  initialState = {
             },
             title: 'Mimie <3',
             id: '151561'
-        } 
+        },
+        visible: false, 
         
     },
     ModalReducer: {
