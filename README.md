@@ -12,7 +12,7 @@ Clone the repository :
 
 Go to the project directory: 
 
-#### `cd youtube-library-app`
+#### `cd YoutubeLibrary/youtube-library-app`
 
 Launch server **(port 2999 must be available)**
 
