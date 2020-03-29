@@ -4,11 +4,12 @@ A React youtube library with some basic features
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Before starting
+## Starting
 
 Clone the repository : 
 
 ### `git clone https://github.com/ClementGuillemaut/YoutubeLibrary.git`
+
 Go to the project directory: 
 
 ### `cd youtube-library-app`
