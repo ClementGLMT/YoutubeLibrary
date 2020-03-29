@@ -32,7 +32,11 @@ You will also see any lint errors in the console.
 
 ## Available Scripts
 
-In the project directory, you can also run:
+In the project directory : 
+
+#### `cd YoutubeLibrary/youtube-library-app`
+
+you can also run:
 
 ### `npm test`
 
