@@ -1,0 +1,331 @@
+
+
+  .form.ui.form {
+    width: 75%;
+    margin: auto;
+    height: 15%;
+    margin-top: 2vh;
+    position: relative;
+    z-index: 500;
+}
+
+.searchForm {
+  width: 75%;
+  margin: auto;
+  margin-top: 2vh;
+  position: relative;
+  z-index: 500;
+}
+
+.tileContainerOnRight {
+  width: 480px;
+  scroll-margin-right: 30px;
+  position: relative;
+  z-index: 1;
+  height: 360px;
+  margin-top: 22px;
+  margin-bottom: 10px;
+}
+
+.tileContainerOnLeft {
+  width: 320px;
+  scroll-margin-right: 30px;
+  position: relative;
+  z-index: 1;
+  height: 180px;
+  margin-top: 22px;
+  margin-bottom: 10px;
+}
+
+.rightPanel {
+  float: left;
+  margin-left: 367px;
+  width: calc(100% - 365px);
+  height: 100%;
+  position: relative;
+  display: flex !important;
+  flex-wrap: wrap;
+  z-index: 800;
+  background-color: white;
+  border-radius: 25px;
+}
+
+.searchContainer {
+  width: 100%
+}
+
+.drop.rightPanel.visible.transition {
+  float: left;
+  margin-left: 367px;
+  width: calc(100% - 365px);
+  height: 100%;
+  position: relative;
+  display: flex !important;
+  flex-wrap: wrap;
+  z-index: 800;
+  background-color: white;
+  border-radius: 25px;
+}
+
+.videoPlayButton {
+  bottom: 0px !important;
+  position: absolute;
+  right: 0px;
+  margin-bottom: 70px !important;
+  margin-right: 116px !important;
+  background-color: rgba(0,0,0,0) !important;
+  z-index: 1;
+}
+
+.videoPlayer {
+  margin-top: 2em;
+  height: 360px;
+  width: 340px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20vh;
+}
+
+.libraryName.ui.header:first-child {
+    height: 5%;
+    width: 350px;
+    text-align: center;
+    align-items: center;
+    font-size: 2em;
+    margin-top: 2vh;
+    margin-left: 10px;
+    margin-bottom: 1px;
+}
+
+.videoList {
+    height: 70%;
+    width: 340px;
+}
+
+.leftPanel  {
+    float: left;
+    width: 365px;
+    height: 90vh;
+    margin-top: 10vh;
+    position: fixed; 
+    background-color: #e1e1e1;
+    border-style: groove;
+    border-top: none;
+    border-bottom: none;
+}
+
+button.ui.fade.animated.button {
+    height: 5% ;
+    width: 340px ;
+    align-items: center ;
+    margin: 0 auto ;
+    margin-left: 10px;
+}
+
+.rootOnLeft {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    overflow-y: hidden;
+    float: left;
+    height: 86%;
+    width: 340px;
+    margin-left: 10px;
+  }
+
+.rootOnRight {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  overflow-y: hidden;
+  height: 100%;
+  margin: auto;
+  position: relative;
+  width: 490px;
+  z-index: 400;
+  margin-top: 30px;
+
+}
+
+.welcome {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.title {
+  margin-top: 5vh !important;
+}
+
+.title2 {
+  margin-top: 10%;
+}
+
+.list {
+  margin-top: 5%;
+}
+
+  .gridListOnLeft {
+    width: 340px;
+    height: 100%;
+    float: left;
+    display: block !important;
+  }
+
+  ul.MuiGridList-root.gridListLeft {
+    display: block;
+  }
+
+  .gridListOnRight {
+    width: 490px;
+    height: 100%;
+    float: left;
+    position: relative;
+    z-index: 100;
+    display: block !important;
+  }
+
+  .gridTileOnRight {
+    width: 480px;
+    scroll-margin-right: 30px;
+    position: relative;
+    z-index: 1;
+    height: 360px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .gridTileOnLeft {
+    width: 320px ;
+    scroll-margin-right: 30px;
+    margin-top: 10px;
+    height: 180px;
+    margin-bottom: 10px;
+  }
+
+  .react-player__preview {
+    /* Custom playing video thumnail here with !important */
+}
+
+.OnLeft {
+    width: 320px;
+    height: 180px; /* Custom left thumbnails here*/
+    transform: translateY(0%) !important;
+    top: 0% !important;
+
+}
+
+.myCenterTriangle {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 9px 0 9px 17px;
+  border-color: transparent transparent transparent #ffffff;
+  bottom: 0px !important;
+  position: absolute;
+  right: 0px;
+  margin-bottom: 92px !important;
+  margin-right: 149px !important;
+}
+
+.OnRight {
+    width: 480px !important;
+    height: 360px; /* Custom right thumbnails here*/
+    transform: translateY(0%) !important;
+    top: 0% !important;
+}
+
+.noResultsImage {
+  background-color: white;
+}
+
+.noResults{
+  margin: auto;
+  margin-top: 5%;
+  width: 639px;
+}
+
+.videoContainer {
+    width: 960px;
+    height: 577px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10vh;
+}
+
+.MuiGridListTileBar-subtitle {
+    font-size: 1rem !important;
+    line-height: 24px !important;
+}
+
+.centerToast {
+  bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.editPopup {
+  bottom: 0 !important;
+  right: 0 !important;
+  position: absolute !important;
+  margin-bottom: 135px !important;
+  background-color: white;
+  margin-right: 10px !important;
+
+}
+
+.deletePopup {
+  bottom: 0 !important;
+  left: 0 !important;
+  position: absolute !important;
+  margin-bottom: 135px !important;
+  background-color: white;
+  margin-left: 10px !important;
+}
+
+.addPopup {
+  bottom: 0px !important;
+  right: 0px !important;
+  margin-bottom: 300px !important;
+  margin-right: 20px !important;
+  position: absolute;
+}
+
+.popupContainer {
+  bottom: 0 !important;
+  right: 0;
+  position: absolute;
+  margin-bottom: 10px !important;
+  background-color: white;
+  width: 2em;
+  height: 2em;
+}
+
+.videoPlayButtonRight {
+  bottom: 0px !important;
+  position: absolute;
+  right: 0px;
+  margin-bottom: 133px !important;
+  margin-right: 165px !important;
+  background-color: rgba(0,0,0,0) !important;
+  z-index: 1;
+}
+
+.myBigCenterTriangle {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 18.5px 0 18.5px 33px;
+  border-color: transparent transparent transparent #ffffff;
+  bottom: 0px !important;
+  position: absolute;
+  right: 0px;
+  margin-bottom: 165px !important;
+  margin-right: 222px !important;
+}
+
+
+
+
+
+

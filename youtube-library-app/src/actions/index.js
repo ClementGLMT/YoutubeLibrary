@@ -1,18 +1,12 @@
 import {store} from '../store';
 const axios = require('axios');
 
-export function updateListReducer(panel, videos) {
+//Update left and right lists
+
+export function updateListReducerAction(panel, videos) {
     switch(panel) {
 
         case 'leftPanel':
-            console.log('left Action created'+JSON.stringify({
-                type: 'UPDATE_LEFTPANEL',
-                payload: {
-                    videos
-                }
-            })
-                );
-
             return {
                 type: 'UPDATE_LEFTPANEL',
                 payload: {
@@ -21,7 +15,6 @@ export function updateListReducer(panel, videos) {
             }
 
         case 'rightPanel':
-            //console.log('')
             return {
                 type: 'UPDATE_RIGHTPANEL',
                 payload: {
@@ -34,54 +27,50 @@ export function updateListReducer(panel, videos) {
     }
 }
 
-export function showWelcomePanel(lastDisp) {
+//For right panel transitions 
 
-    var rep = {
-        type: 'SHOW_WELCOME',
-        payload: {
-
-        }
-    }
-    rep.payload[lastDisp] = false;
-    return rep;
-
-}
-
-export function showSearchAndResults(payload) {
-
-    var rep = {
-        type: 'SHOW_SEARCH_AND_RESULTS',
-        payload
-    };
-    
-    //rep.payload[lastDisp] = false;
-    console.log("Action created: "+JSON.stringify(rep));
-    return rep;
-
-}
-
-export function toogleVisible() {
+export function toggleVisibleAction() {
     var rep = {
         type: 'TOOGLE_VISIBLE'
     }
     return rep;
 }
 
-export function showVideoPlayer(payload) {
+//Right pannel display actions
+
+export function showWelcomePanelAction(payload) {
+
+    var rep = {
+        type: 'SHOW_WELCOME',
+        payload
+    }
+    return rep;
+
+}
+
+export function showSearchAndResultsAction(payload) {
+
+    var rep = {
+        type: 'SHOW_SEARCH_AND_RESULTS',
+        payload
+    };    
+    return rep;
+
+}
+
+export function showVideoPlayerAction(payload) {
 
     var rep = {
         type: 'SHOW_VIDEO_PLAYER',
         payload
     }
-
-    //rep.payload[lastDisp] = false;
-    console.log("Action created: "+JSON.stringify(rep));
-
     return rep;
 
 }
 
-export function setUser(value) {
+//Set user
+
+export function setUserAction(value) {
     return {
         type: 'SET_USER',
         payload: {
@@ -90,15 +79,13 @@ export function setUser(value) {
     }
 }
 
-export function modalAction(action, payload) {
+//Open or close the modal
+
+export function openCloseModalAction(action, payload) {
 
     switch(action) {
 
         case 'open':
-            console.log("Returning action : "+JSON.stringify({
-                type: 'OPEN_MODAL',
-                payload
-            }));
             return {
                 type: 'OPEN_MODAL',
                 payload
@@ -112,10 +99,11 @@ export function modalAction(action, payload) {
         default: 
             return;
     }
-
 }
 
-export function isSearching(bool, maxRes) {
+//Set is searching with the maximum results asked
+
+export function isSearchingAction(bool, maxRes) {
 
     return {
         type: 'IS_SEARCHING',
@@ -126,13 +114,9 @@ export function isSearching(bool, maxRes) {
     }
 }
 
-export function resultsAreLoading(bool) {
-    console.log("Results are loading: "+JSON.stringify({
-        type: 'RESULTS_ARE_LOADING',
-        payload: {
-            isLoading: bool,
-        }
-    }));
+//Loading search results actions
+
+export function resultsAreLoadingAction(bool) {
     return {
         type: 'RESULTS_ARE_LOADING',
         payload: {
@@ -141,13 +125,7 @@ export function resultsAreLoading(bool) {
     };
 }
 
-export function resultsFetchDataSuccess(results) {
-    console.log("Results are fetch: "+JSON.stringify({
-        type: 'RESULTS_FETCH_DATA_SUCCESS',
-        payload: {
-            results,
-        }
-    }));
+export function resultsFetchDataSuccessAction(results) {
     return {
         type: 'RESULTS_FETCH_DATA_SUCCESS',
         payload: {
@@ -156,8 +134,7 @@ export function resultsFetchDataSuccess(results) {
     };
 }
 
-export function resultsHasErrored(bool) {
-    console.log('%c Error retrieving data', 'color: red');
+export function resultsHasErroredAction(bool) {
     return {
         type: 'RESULTS_HAS_ERRORED',
         payload: {
@@ -166,38 +143,37 @@ export function resultsHasErrored(bool) {
     };
 }
 
-export function errorAfterFiveSeconds() {
-    return (dispatch) => {
+export function errorAfterFiveSecondsAction() {
+    return () => {
         setTimeout(() => {
-            store.dispatch(resultsHasErrored(true));
+            store.dispatch(resultsHasErroredAction(true));
         }, 5000);
     };
 }
 
-export function resultsFetchData(url, body) {
-    return (dispatch) => {
-        store.dispatch(resultsAreLoading(true));
-        console.log("Fetching with body = "+JSON.stringify(body))
+//Middleware for supporting async states setting
+
+export function resultsFetchDataAction(url, body) {
+    return () => {
+        store.dispatch(resultsAreLoadingAction(true));
         axios.post(url, body)
         .then(function(response) {
             if(response.status !== 200){
-                console.log(response.statusText);
-                store.dispatch(resultsHasErrored(true));
+                store.dispatch(resultsHasErroredAction(true));
 
             }
-            store.dispatch(resultsAreLoading(false));
+            store.dispatch(resultsAreLoadingAction(false));
             if(response.data.status === 'No results') {
-                store.dispatch(resultsHasErrored(true));
+                store.dispatch(resultsHasErroredAction(true));
             }
             else {
-                console.log("Got raw rfesponse : "+JSON.stringify(response.data));
                 var data = response.data;
                 for (let i = 0; i < data.videos.length; i++) {
                     data.videos[i]['subtitle'] = '';
                     data.videos[i]['isParsed'] = false;
                 }
-                store.dispatch(resultsHasErrored(false));
-                store.dispatch(resultsFetchDataSuccess(data.videos));
+                store.dispatch(resultsHasErroredAction(false));
+                store.dispatch(resultsFetchDataSuccessAction(data.videos));
             }
         })
         .catch( function(err) {

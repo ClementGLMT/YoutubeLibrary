@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
-import LeftPanel from './components/leftPanel';
-import RightPanel from './components/rightPanel';
+import LeftPanel from './components/LeftPanel/leftPanel';
+import RightPanel from './components/RightPanel/rightPanel';
 import {Header} from 'semantic-ui-react';
-import WelcomeRightPanel from './components/welcomeRightPanel';
-import {setUser} from './actions'
+import WelcomeRightPanel from './components/RightPanel/welcomeRightPanel';
+import {setUserAction, showWelcomePanelAction} from './actions'
 import 'semantic-ui-css/semantic.min.css';
 import { store } from "./store";
-import {Link, Route} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -18,14 +18,8 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.getUser();
-    this.update= false;
-
+    //this.dispatchShowWelcome();
   }
-  
-
-
-  
-
   
   getUser(){
 
@@ -34,77 +28,75 @@ export default class App extends React.Component {
     var url = window.location.href;
     var matches =  url.match(regex);
     if(matches !== null){
-      this.dispatchSetUser(url.match(regex)[1]);
-      console.log("User got : "+url.match(regex)[1])
+      this.dispatchUser(url.match(regex)[1]);
+      this.dispatchShowWelcome();
     }
     else {
-      this.dispatchSetUser('no user');
-      console.log("no User got : ")
-
+      this.dispatchUser('no user');
     }
-   }
+  }
  
-   dispatchSetUser(user) {
-     store.dispatch(setUser(user));
-     console.log("User dispatch done");
-   }
+  dispatchUser(user) {
+     store.dispatch(setUserAction(user));
+  }
 
    componentDidMount() {
     this.getUser();
+    this.dispatchShowWelcome();
    }
+
+   dispatchShowWelcome() {
+
+    var actualRightDisp = store.getState().RightDisplay;
+
+    for(var key in actualRightDisp){                        //Find actual display on right panel and turn it off
+      if(actualRightDisp[key]  && (key !== 'visible'))
+        actualRightDisp[key] = false;
+    }
+    //store.dispatch(toggleVisibleAction());
+    store.dispatch(showWelcomePanelAction(actualRightDisp));
+   }
+
+
 
 
   render(){
 
-    console.log("User in App.js : "+store.getState().SetUser.user);
-    var user = store.getState().SetUser.user;
-    /*var offTop = this.header.getBoundingClientRect().top;
-    if (window.pageYOffset > offTop) {
-      this.header.classList.add("sticky");
-    } else {
-      this.header.classList.remove("sticky");
-    }*/
-
-    var links = <h3 className='title2'> Log you in with &nbsp;  
-                  <Link  to='/library?user=John'>
-                    John &nbsp;
-                  </Link>
-                    or &nbsp;
-                  <Link  to='/library?user=Mark'>
-                    Mark
-                  </Link>
-                </h3>
+    var user = store.getState().User.user;
+    var links = 
+      <h3 className='title2'> Log you in with &nbsp;  
+        <Link to='/library?user=John'>
+          John &nbsp;
+        </Link>
+        or &nbsp;
+        <Link to='/library?user=Mark'>
+          Mark
+        </Link>
+      </h3>
 
     if(user === 'no user'){
+
+
       return (
         <div className="App">
+          <Header className='App-header'>
+            Your Youtube library
+          </Header>
+          <WelcomeRightPanel links={links}/>
 
-        <Header className='App-header'>
-          Your Youtube library
-        </Header>
-
-        <WelcomeRightPanel links={links}/>
-
-      </div>
+        </div>
       );
     }
 
     return (
 
       <div className="App">
-
-
         <Header className='App-header'>
           Your Youtube library
         </Header>
-
         <LeftPanel className= "leftPanel" user= {user}/>
-  
-      <RightPanel className = "rightPanel" user= {user}/>
-
+        <RightPanel className = "rightPanel" user= {user}/>
       </div>
-  
     );
   }
-
 }

@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import DataLoading from './dataLoading';
-import SetUser from './setUser';
-import ShowOnRight from './showOnRight';
-import ModalReducer from './modalReducer';
+import User from './user';
+import RightDisplay from './rightDisplay';
+import Modal from './modal';
 
 export default combineReducers({
   DataLoading,
-  SetUser,
-  ShowOnRight,
-  ModalReducer
+  User,
+  RightDisplay,
+  Modal
 })
