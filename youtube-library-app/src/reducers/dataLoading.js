@@ -2,39 +2,41 @@ import initialState from '../store/initialState';
 
 export default function dataLoading (state = initialState, action)  {
 
+    var rep;
+
     switch(action.type) {
 
         case 'UPDATE_LEFTPANEL':
-            var rep = state;
+            rep = state;
             rep.leftPanel.videos = action.payload.videos;
             console.log("Received by Data reducer for toogle left : "+JSON.stringify(rep));
             return rep;
 
         case 'UPDATE_RIGHTPANEL':
-            var rep = state;
+            rep = state;
             rep.rightPanel.videos = action.payload.videos;
             //console.log("Received by Data reducer : "+rep);
             return rep;
 
         case 'RESULTS_HAS_ERRORED':
-            var rep = state;
+            rep = state;
             rep.rightPanel.hasErrored = action.payload.hasErrored;
             return rep;
 
         case 'RESULTS_ARE_LOADING':
-            var rep = state;
+            rep = state;
             rep.rightPanel.isLoading = action.payload.isLoading;
             return rep;
 
         case 'RESULTS_FETCH_DATA_SUCCESS':
-            var rep = state;
+            rep = state;
             //rep
             rep.rightPanel.videos = action.payload.results;
             //rep.rightPanel.isLoaded = true;
             return rep;
 
         case 'IS_SEARCHING': 
-            var rep = state;
+            rep = state;
             rep.rightPanel.isSearching.search = action.payload.isSearching;
             rep.rightPanel.isSearching.maxRes = action.payload.maxRes;
             return rep;

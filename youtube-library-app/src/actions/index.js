@@ -5,7 +5,14 @@ export function updateListReducer(panel, videos) {
     switch(panel) {
 
         case 'leftPanel':
-            console.log('left Action created');
+            console.log('left Action created'+JSON.stringify({
+                type: 'UPDATE_LEFTPANEL',
+                payload: {
+                    videos
+                }
+            })
+                );
+
             return {
                 type: 'UPDATE_LEFTPANEL',
                 payload: {
@@ -40,19 +47,24 @@ export function showWelcomePanel(lastDisp) {
 
 }
 
-export function showSearchAndResults(lastDisp) {
+export function showSearchAndResults(payload) {
 
     var rep = {
         type: 'SHOW_SEARCH_AND_RESULTS',
-        payload: {
-
-        }
+        payload
     };
     
-    rep.payload[lastDisp] = false;
+    //rep.payload[lastDisp] = false;
     console.log("Action created: "+JSON.stringify(rep));
     return rep;
 
+}
+
+export function toogleVisible() {
+    var rep = {
+        type: 'TOOGLE_VISIBLE'
+    }
+    return rep;
 }
 
 export function showVideoPlayer(payload) {

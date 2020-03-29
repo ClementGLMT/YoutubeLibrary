@@ -10,7 +10,32 @@
 }
 
 .searchForm {
+  width: 75%;
+  margin: auto;
+  /*height: 15%;*/
+  margin-top: 2vh;
+  position: relative;
+  z-index: 500;
+}
 
+.tileContainerOnRight {
+  width: 480px;
+  scroll-margin-right: 30px;
+  position: relative;
+  z-index: 1;
+  height: 360px;
+  margin-top: 22px;
+  margin-bottom: 10px;
+}
+
+.tileContainerOnLeft {
+  width: 320px;
+  scroll-margin-right: 30px;
+  position: relative;
+  z-index: 1;
+  height: 180px;
+  margin-top: 22px;
+  margin-bottom: 10px;
 }
 
 
@@ -33,16 +58,30 @@
   width: calc(100% - 365px);
   height: 100%;
   position: relative;
-  display: flex;
+  display: flex !important;
   flex-wrap: wrap;
   z-index: 800;
   background-color: white;
-
+  border-radius: 25px;
 }
 
-.divider {
-
+.searchContainer {
+  width: 100%
 }
+
+.drop.rightPanel.visible.transition {
+  float: left;
+  margin-left: 367px;
+  width: calc(100% - 365px);
+  height: 100%;
+  position: relative;
+  display: flex !important;
+  flex-wrap: wrap;
+  z-index: 800;
+  background-color: white;
+  border-radius: 25px;
+}
+
 
 
 
@@ -121,7 +160,7 @@ button.ui.fade.animated.button {
   flex-wrap: wrap;
   justify-content: space-around;
   overflow-y: hidden;
-  height: 86%;
+  height: 100%;
   margin: auto;
   position: relative;
   width: 490px;
@@ -164,6 +203,7 @@ button.ui.fade.animated.button {
     float: left;
     position: relative;
     z-index: 100;
+    display: block !important;
   }
 
   .gridTileOnRight {
@@ -198,6 +238,7 @@ button.ui.fade.animated.button {
     width: 320px;
     height: 180px; /* Custom thumbnails here*/
     transform: translateY(0%) !important;
+    top: 0% !important;
 
 }
 
@@ -218,6 +259,17 @@ button.ui.fade.animated.button {
     width: 480px !important;
     height: 360px; /* Custom thumbnails here*/
     transform: translateY(0%) !important;
+    top: 0% !important;
+}
+
+.noResultsImage {
+  background-color: white;
+}
+
+.noResults{
+  margin: auto;
+  margin-top: 5%;
+  width: 639px;
 }
 
 .videoContainer {
@@ -228,13 +280,15 @@ button.ui.fade.animated.button {
     margin-top: 10vh;
 }
 
-.MuiGridListTileBar-title {
-
-}
-
 .MuiGridListTileBar-subtitle {
     font-size: 1rem !important;
     line-height: 24px !important;
+}
+
+.centerToast {
+  bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 

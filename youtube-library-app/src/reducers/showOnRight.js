@@ -3,28 +3,40 @@ import initialState from '../store/initialState';
 
 const showOnRight = (state = initialState, action) => {
 
+    var rep;
+
     switch(action.type) {
 
+
+        case 'TOOGLE_VISIBLE':
+            rep = state;
+            rep.visible = !state.visible;
+            console.log("%c Updating state in toogle visible reducer with : "+JSON.stringify(state), 'color:green')
+            return rep;
+
+
         case 'SHOW_WELCOME':
-            var rep = state;
+            rep = state;
+            rep = action.payload;
             rep.rightShowWelcome= true;
-            rep.ShowOnRight = action.payload;
             console.log("%c Received by right reducer SHOW WELCOME: "+rep, 'color:green');
             return rep;
         
         case 'SHOW_SEARCH_AND_RESULTS':
-            var rep = state;
+            rep = state;
+            console.log("%c State gave in right reducer SHOW SEARCH AND RESULTS : "+JSON.stringify(rep), 'color:green');
             rep = action.payload;
             rep.rightShowSearchAndResults= true;
             console.log("%c Sending by right reducer SHOW SEARCH AND RESULTS : "+JSON.stringify(rep), 'color:green');
             return rep;
 
         case 'SHOW_VIDEO_PLAYER':
-            var rep = state;
+            rep = state;
+            console.log("%c State gave in right reducer SHOW_VIDEO_PLAYER : "+JSON.stringify(rep), 'color:green');
             rep = action.payload;
             rep.rightShowVideo = true;
 
-            console.log("%c Sending by right reducer SHOW VIDEO PLAYER ACTION : "+JSON.stringify(action), 'color:green');
+            //console.log("%c Sending by right reducer SHOW VIDEO PLAYER ACTION : "+JSON.stringify(action), 'color:green');
 
             //rep.rightShowVideo[action.payload]
             console.log("%c Sending by right reducer SHOW VIDEO PLAYER: "+JSON.stringify(rep), 'color:green');

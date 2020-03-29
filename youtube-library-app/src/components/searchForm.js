@@ -5,7 +5,6 @@ import './components.css';
 import {updateListReducer, resultsFetchData, isSearching} from '../actions';
 import { store } from '../store';
 
-const axios = require('axios');
 
 
 

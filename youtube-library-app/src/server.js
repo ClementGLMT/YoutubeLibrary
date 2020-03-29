@@ -9,6 +9,23 @@ var port = 2999;
 var ytapiURL = 'https://www.googleapis.com/youtube/v3/search';
 var apiKey = 'AIzaSyASO7i2BTsNkU_YjucK5Eej-XgrsHnZDu8';
 
+function decodeEntities(encodedString) {
+    var translate_re = /&(nbsp|amp|quot|lt|gt);/g;
+    var translate = {
+        "nbsp":" ",
+        "amp" : "&",
+        "quot": "\"",
+        "lt"  : "<",
+        "gt"  : ">"
+    };
+    return encodedString.replace(translate_re, function(match, entity) {
+        return translate[entity];
+    }).replace(/&#(\d+);/gi, function(match, numStr) {
+        var num = parseInt(numStr, 10);
+        return String.fromCharCode(num);
+    });
+}
+
 
 function connectAPI() {
     var app = express(); 
@@ -160,7 +177,7 @@ function connectAPI() {
                     for (let i = 0; i < req.body.maxResults; i++) {
                         results.videos.push({
                             id: response.data.items[i].id.videoId, 
-                            title: response.data.items[i].snippet.title,
+                            title: decodeEntities(response.data.items[i].snippet.title),
                             thumbnails: response.data.items[i].snippet.thumbnails //Modify thumbnails here
                         });                      
                   }
