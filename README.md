@@ -21,7 +21,7 @@ Launch server **(port 2999 must be available)**
 
 Open **another terminal**, then 
 
-#### `cd youtube-library-app`
+#### `cd YoutubeLibrary/youtube-library-app`
 #### `npm start`
 
 It runs the app in the development mode.<br />
