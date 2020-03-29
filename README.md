@@ -16,12 +16,12 @@ Go to the project directory:
 
 Launch server **(port 2999 must be available)**
 
+#### `npm install`
 #### `node src/server.js`
 
 Open **another terminal**, then 
 
 #### `cd youtube-library-app`
-#### `npm install`
 #### `npm start`
 
 It runs the app in the development mode.<br />
