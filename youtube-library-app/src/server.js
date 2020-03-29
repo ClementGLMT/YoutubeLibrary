@@ -37,8 +37,7 @@ function connectAPI() {
 
     myRouter.route('/add')
         .post(function(req,res){
-            console.log("POST received on /add");
-            fs.readFile('../../server/'+req.body.user+".lib", (err, data) => {
+            fs.readFile('../../databases/'+req.body.user+".lib", (err, data) => {
                 if (err) {
                   console.error(err)
                   return
@@ -47,11 +46,11 @@ function connectAPI() {
                 
                 let json = JSON.parse( '{"title":"'+req.body.addtitle+'", "id":"'+req.body.addid+'", "thumbnails":'+req.body.thumbnails+'}');
                 data['videos'].push(json);
-                fs.writeFile('../../server/'+req.body.user+".lib", JSON.stringify(data), function(err) {
+                fs.writeFile('../../databases/'+req.body.user+".lib", JSON.stringify(data), function(err) {
                     if(err) {
                         return console.log(err);
                     }
-                    fs.readFile('../../server/'+req.body.user+".lib", (err, data) => {
+                    fs.readFile('../../databases/'+req.body.user+".lib", (err, data) => {
                         data = JSON.parse(data);
                         res.json(data);
                     })
@@ -63,12 +62,10 @@ function connectAPI() {
         var vidtoplay = [];
         myRouter.route('/play')
             .post(function (req,res) {
-                console.log("POST received on /play");
                 vidtoplay = {
                     videoId: req.body.videoid,
                     videotitle: req.body.videotitle,
                     thumbnails: req.body.thumbnails
-                    //Modify thumbnails here
                 }
                 res.json(vidtoplay);
             })
@@ -76,9 +73,7 @@ function connectAPI() {
         myRouter.route('/rename')
             .post(function(req,res){
                 var oldname;
-                console.log("POST received on /rename");
-                console.log("Req received: "+JSON.stringify(req.body.body.user));
-                fs.readFile('../../server/'+req.body.body.user+".lib", (err, data) => {
+                fs.readFile('../../databases/'+req.body.body.user+".lib", (err, data) => {
                     if (err) {
                       return console.error(err);
                     }
@@ -89,11 +84,11 @@ function connectAPI() {
                             data['videos'][i].title = req.body.body.newtitle;
                         }
                     }
-                    fs.writeFile('../../server/'+req.body.body.user+".lib", JSON.stringify(data), function(err) {
+                    fs.writeFile('../../databases/'+req.body.body.user+".lib", JSON.stringify(data), function(err) {
                         if(err) {
                             return console.log(err);
                         }
-                        fs.readFile('../../server/'+req.body.body.user+".lib", (err, data) => {
+                        fs.readFile('../../databases/'+req.body.body.user+".lib", (err, data) => {
                             data = JSON.parse(data);
                             res.json(data);
                         })
@@ -106,25 +101,25 @@ function connectAPI() {
     
         myRouter.route('/remove')
         .post(function(req,res){
-            console.log("POST received on /remove");
-            fs.readFile('../../server/'+req.body.body.user+".lib", (err, data) => {
+            fs.readFile('../../databases/'+req.body.body.user+".lib", (err, data) => {
                 if (err) {
                   console.error(err)
                   return
                 }
                 data = JSON.parse(data);
-
+                var deletedVideo;
                 for (var i = 0; i < data['videos'].length; i++){
                     if (data['videos'][i].id === req.body.body.rmid){
+                        deletedVideo = data['videos'][i].title;
                         data['videos'].splice(i,1);
                     }
                   }
-                  console.log(req.body.body.rmtitle+ "deteled from "+req.body.body.user+" library");        
-                  fs.writeFile('../../server/'+req.body.body.user+".lib", JSON.stringify(data), function(err) {
+                  console.log(deletedVideo+ " deteled from "+req.body.body.user+"'s library");        
+                  fs.writeFile('../../databases/'+req.body.body.user+".lib", JSON.stringify(data), function(err) {
                     if(err) {
                         return console.log(err);
                     }
-                    fs.readFile('../../server/'+req.body.body.user+".lib", (err, data) => {
+                    fs.readFile('../../databases/'+req.body.body.user+".lib", (err, data) => {
                         data = JSON.parse(data);
                         res.json(data);
                     })
@@ -134,13 +129,11 @@ function connectAPI() {
 
     myRouter.route('/data')
         .get(function(req,res){ 
-            console.log("GET received on /data");
             console.log(req.query);
-            fs.readFile('../../server/'+req.query.user+".lib", (err, data) => {
+            fs.readFile('../../databases/'+req.query.user+".lib", (err, data) => {
                 if (err) {
                     return console.error(err);
                 }
-                //console.log(data.toString());
                 try {
                     data = JSON.parse(data.toString());
                     res.json(data);
@@ -153,7 +146,6 @@ function connectAPI() {
 
     myRouter.route('/search')
         .post(function(req,res){
-            console.log("POST received on /search"+req);
             axios.get(ytapiURL, {
                 params: {
                   part: 'snippet',
@@ -170,18 +162,19 @@ function connectAPI() {
                       res.json({
                           status: 'No results'
                       })
-                      console.log("No results");
                   }
                   else {
                     results.status = 'Ok';
                     for (let i = 0; i < req.body.maxResults; i++) {
-                        results.videos.push({
-                            id: response.data.items[i].id.videoId, 
-                            title: decodeEntities(response.data.items[i].snippet.title),
-                            thumbnails: response.data.items[i].snippet.thumbnails //Modify thumbnails here
-                        });                      
+                        if(response.data.items[i] !== undefined){
+                            results.videos.push({
+                                id: response.data.items[i].id.videoId, 
+                                title: decodeEntities(response.data.items[i].snippet.title),
+                                thumbnails: response.data.items[i].snippet.thumbnails //Modify thumbnails here
+                            }); 
+                        }                  
                   }
-                  console.log(JSON.stringify(results));
+                  console.log("Results of search: "+JSON.stringify(results));
                   res.json(results);
                   }
 
