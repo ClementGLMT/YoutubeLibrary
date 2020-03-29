@@ -8,21 +8,21 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Clone the repository : 
 
-### `git clone https://github.com/ClementGuillemaut/YoutubeLibrary.git`
+#### `git clone https://github.com/ClementGuillemaut/YoutubeLibrary.git`
 
 Go to the project directory: 
 
-### `cd youtube-library-app`
+#### `cd youtube-library-app`
 
 Launch server **(port 2999 must be available)**
 
-### `node src/server.js`
+#### `node src/server.js`
 
 Open **another terminal**, then 
 
-### `cd youtube-library-app`
-### `npm install`
-### `npm start`
+#### `cd youtube-library-app`
+#### `npm install`
+#### `npm start`
 
 It runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
