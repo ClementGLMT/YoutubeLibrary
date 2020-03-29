@@ -37,7 +37,7 @@ function connectAPI() {
 
     myRouter.route('/add')
         .post(function(req,res){
-            fs.readFile('../../databases/'+req.body.user+".lib", (err, data) => {
+            fs.readFile('../databases/'+req.body.user+".lib", (err, data) => {
                 if (err) {
                   console.error(err)
                   return
@@ -46,11 +46,11 @@ function connectAPI() {
                 
                 let json = JSON.parse( '{"title":"'+req.body.addtitle+'", "id":"'+req.body.addid+'", "thumbnails":'+req.body.thumbnails+'}');
                 data['videos'].push(json);
-                fs.writeFile('../../databases/'+req.body.user+".lib", JSON.stringify(data), function(err) {
+                fs.writeFile('../databases/'+req.body.user+".lib", JSON.stringify(data), function(err) {
                     if(err) {
                         return console.log(err);
                     }
-                    fs.readFile('../../databases/'+req.body.user+".lib", (err, data) => {
+                    fs.readFile('../databases/'+req.body.user+".lib", (err, data) => {
                         data = JSON.parse(data);
                         res.json(data);
                     })
@@ -73,7 +73,7 @@ function connectAPI() {
         myRouter.route('/rename')
             .post(function(req,res){
                 var oldname;
-                fs.readFile('../../databases/'+req.body.body.user+".lib", (err, data) => {
+                fs.readFile('../databases/'+req.body.body.user+".lib", (err, data) => {
                     if (err) {
                       return console.error(err);
                     }
@@ -84,11 +84,11 @@ function connectAPI() {
                             data['videos'][i].title = req.body.body.newtitle;
                         }
                     }
-                    fs.writeFile('../../databases/'+req.body.body.user+".lib", JSON.stringify(data), function(err) {
+                    fs.writeFile('../databases/'+req.body.body.user+".lib", JSON.stringify(data), function(err) {
                         if(err) {
                             return console.log(err);
                         }
-                        fs.readFile('../../databases/'+req.body.body.user+".lib", (err, data) => {
+                        fs.readFile('../databases/'+req.body.body.user+".lib", (err, data) => {
                             data = JSON.parse(data);
                             res.json(data);
                         })
@@ -101,7 +101,7 @@ function connectAPI() {
     
         myRouter.route('/remove')
         .post(function(req,res){
-            fs.readFile('../../databases/'+req.body.body.user+".lib", (err, data) => {
+            fs.readFile('../databases/'+req.body.body.user+".lib", (err, data) => {
                 if (err) {
                   console.error(err)
                   return
@@ -115,11 +115,11 @@ function connectAPI() {
                     }
                   }
                   console.log(deletedVideo+ " deteled from "+req.body.body.user+"'s library");        
-                  fs.writeFile('../../databases/'+req.body.body.user+".lib", JSON.stringify(data), function(err) {
+                  fs.writeFile('../databases/'+req.body.body.user+".lib", JSON.stringify(data), function(err) {
                     if(err) {
                         return console.log(err);
                     }
-                    fs.readFile('../../databases/'+req.body.body.user+".lib", (err, data) => {
+                    fs.readFile('../databases/'+req.body.body.user+".lib", (err, data) => {
                         data = JSON.parse(data);
                         res.json(data);
                     })
@@ -130,7 +130,7 @@ function connectAPI() {
     myRouter.route('/data')
         .get(function(req,res){ 
             console.log(req.query);
-            fs.readFile('../../databases/'+req.query.user+".lib", (err, data) => {
+            fs.readFile('../databases/'+req.query.user+".lib", (err, data) => {
                 if (err) {
                     return console.error(err);
                 }
