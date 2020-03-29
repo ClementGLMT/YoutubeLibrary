@@ -10,14 +10,14 @@ Clone the repository :
 
 #### `git clone https://github.com/ClementGuillemaut/YoutubeLibrary.git`
 
-Go to the project source directory: 
+Go to the project directory: 
 
-#### `cd YoutubeLibrary/youtube-library-app/src`
+#### `cd YoutubeLibrary/youtube-library-app`
 
 Launch server **(port 2999 must be available)**
 
 #### `npm install`
-#### `node server.js`
+#### `node src/server.js`
 
 Open **another terminal**, then 
 
